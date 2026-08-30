@@ -756,3 +756,6 @@ details.others .others-body{ padding:4px 18px 18px; display:flex; flex-direction
 .award-pdf.reveal{
   transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, opacity .55s ease;
 }
+
+/* 浅色模式文字选中：深色文字 + 浅绿底（深色模式保持绿底白字） */
+[data-theme="light"] ::selection{ background:rgba(12,157,110,.22); color:#0a1f16; }
