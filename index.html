@@ -6,7 +6,7 @@
 <title>许博耀 · Orlando Hsu</title>
 <meta name="description" content="许博耀（Orlando Hsu）· 项目作品集">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="assets/css/main.css?v=5">
+<link rel="stylesheet" href="assets/css/main.css?v=6">
 </head>
 <body>
 <div class="bg-grid"></div>
@@ -35,7 +35,7 @@
 <!-- ======================= HERO ======================= -->
 <section class="hero">
   <div class="container">
-    <div class="intro-line">$ whoami · 技术爱好者 · STM32 / FreeRTOS / OpenCV / Python / PLC / Structural Design </div>
+    <div class="intro-line">$ whoami · Developer · STM32 / FreeRTOS / OpenCV / Python / PLC / Structural Design </div>
     <img class="avatar" src="assets/img/head.jpg" alt="许博耀 Orlando Hsu">
     <h1><span class="grad">Orlando Hsu</span> <span class="thin">· 许博耀</span></h1>
     <div class="cta">
@@ -55,7 +55,7 @@
         <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">MCU</span>      STM32F411CEU6 (Cortex-M4F @100MHz) · ESP32</div>
         <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">RTOS</span>     FreeRTOS · CMSIS-RTOS2 · Active Object</div>
         <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">UI</span>       LVGL · SPI-DMA 渲染管线</div>
-        <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">Periph</span>   UART-DMA/IDLE · 软件 I2C · SPI · BLE · Ymodem OTA</div>
+        <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">Periph</span>   UART-DMA/IDLE · 软件 I2C · SPI · BLE · Ymodem IAP</div>
         <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">Vision</span>   OpenCV · 霍夫变换 · 模板匹配 · 缺陷检测 · 轨迹规划</div>
         <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">AI</span>       Dify Agent · RAG · ASR (FunASR) · 模型微调</div>
         <div class="line boot-line"><span class="info">user</span>   = 许博耀 · Orlando Hsu · Embedded Software Engineer</div>
@@ -87,7 +87,7 @@
 
     <div class="stat-strip reveal">
       <div class="stat"><div class="num">07<small> 个</small></div><div class="lbl">项目（涵盖嵌软、工业自动化等）</div></div>
-      <div class="stat"><div class="num">3<small> 类</small></div><div class="lbl">硬件平台：STM32 / ESP32 / PLC</div></div>
+      <div class="stat"><div class="num">3<small> 类</small></div><div class="lbl">技术平台：STM32 / ESP32 / PLC</div></div>
       <div class="stat"><div class="num">01<small> 个</small></div><div class="lbl">开源项目：Teo-Estuary 语料平台</div></div>
       <div class="stat"><div class="num">6<small>+</small></div><div class="lbl">奖项与认证（iCAN / ICT / HCIA / 软著）</div></div>
     </div>
@@ -98,7 +98,7 @@
 <section class="sec" id="projects">
   <div class="container">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 项目 <span class="idx">projects/</span></h2>
-    <p class="sec-desc reveal">3个独立开发项目 · 4个实验室项目 · 1个实习项目</p>
+    <p class="sec-desc reveal">3个独立开发项目 · 3个实验室项目 · 1个实习项目</p>
     <div class="sec-line reveal"></div>
 
     <!-- ===== 核心项目 ===== -->
@@ -112,12 +112,12 @@
       <div class="tags">
         <span class="tag grn">STM32F411</span><span class="tag grn">FreeRTOS</span><span class="tag grn">LVGL</span>
         <span class="tag">Active Object</span><span class="tag">五层架构</span><span class="tag">OOP-in-C</span>
-        <span class="tag">低功耗</span><span class="tag alt">IAP OTA 双保险</span>
+        <span class="tag">低功耗</span><span class="tag alt">IAP BootLoader</span>
       </div>
       <p class="overview">
-        企业级固件工程：五层单向依赖架构 + Active Object 无锁并发框架 + OOP-in-C 驱动体系 + 七级自动初始化 +
-        声明式低功耗引擎 + 单槽双保险 IAP OTA（Ymodem + CRC32）。把 Linux 内核 /
-        AUTOSAR 的工程思想完整落进一颗 512KB Flash 的 MCU。
+        企业级固件实践：五层单向依赖架构 + Active Object 业务无共享锁框架 + OOP-in-C 驱动体系 + 七级自动初始化 +
+        声明式低功耗引擎 + IAP BootLoader（Ymodem + CRC32，App 位于 0x0800C000）。借鉴 Linux 内核 /
+        AUTOSAR 的工程思想，落地到一颗 512KB Flash 的 MCU。
       </p>
       <div class="metric">▲ 核心项目 · 成熟架构</div>
       <span class="go">进入项目 <span class="arr">→</span></span>
@@ -222,7 +222,7 @@
         <div class="when">2026.05 – 至今</div>
         <div class="role">独立开发项目 · 固件开发</div>
         <h4>Wrist-Talk 智能腕表系统</h4>
-        <p>STM32F411 + FreeRTOS + LVGL：五层单向依赖架构、Active Object 无锁并发、OOP-in-C 驱动体系、七级自动初始化、声明式低功耗引擎、单槽双保险 IAP OTA。</p>
+        <p>STM32F411 + FreeRTOS + LVGL：五层单向依赖架构、Active Object 业务无共享锁、OOP-in-C 驱动体系、七级自动初始化、声明式低功耗引擎、SPI-DMA 渲染管线、单槽双保险 IAP BootLoader。</p>
       </div>
       <div class="tl-item">
         <div class="when">2025.10 – 至今</div>
@@ -239,7 +239,7 @@
       <div class="tl-item">
         <div class="when">2024.01 – 2025.01</div>
         <div class="role">项目负责人 · 工业视觉 / PLC 控制 / 机械设计</div>
-        <h4>锂电池自动化PACK生产线· 校内实验室</h4>
+        <h4>锂电池自动化PACK生产线（校内实验室）</h4>
         <p>焊接模块：视觉识别成功率 56% → 98.5%，完成「随动焊接」预研，Unity 数字孪生与 ModelArts 焊后良率检测，获 iCAN 全国三等奖；产线整合：Fusion 360 移料机构重构（非标件转标准件）、PLC 控制架构与工业组网、贴纸模块结构设计，输出 BOM 表并落地实物。</p>
       </div>
       <div class="tl-item">
@@ -298,7 +298,7 @@
 <section class="sec" id="skills">
   <div class="container">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 技术栈 <span class="idx">skills/</span></h2>
-    <p class="sec-desc reveal">按嵌入式开发的能力维度组织，每一项都来自上面项目的实际使用。</p>
+    <p class="sec-desc reveal">按嵌入式开发的能力维度组织，每一项都来自上面项目的实际实现。</p>
     <div class="sec-line reveal"></div>
     <div class="skill-groups reveal">
       <div class="skill-group">
@@ -307,7 +307,7 @@
           <span class="skill-chip">C</span><span class="skill-chip">STM32 (HAL)</span><span class="skill-chip">FreeRTOS</span>
           <span class="skill-chip">CMSIS-RTOS2</span><span class="skill-chip">LVGL</span><span class="skill-chip">Keil MDK / ARMCC</span>
           <span class="skill-chip">CubeMX</span><span class="skill-chip">OOP-in-C</span><span class="skill-chip">Active Object</span>
-          <span class="skill-chip">IAP OTA (Ymodem)</span><span class="skill-chip">低功耗 STOP/STANDBY</span>
+          <span class="skill-chip">IAP BootLoader / Ymodem</span><span class="skill-chip">低功耗 STOP/STANDBY</span>
           <span class="skill-chip">UART DMA+IDLE</span><span class="skill-chip">SPI DMA</span><span class="skill-chip">软件 I2C</span>
           <span class="skill-chip">BLE 透传 (KT6328)</span><span class="skill-chip">ESP32</span><span class="skill-chip">看门狗</span>
         </div>
@@ -387,6 +387,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=5"></script>
+<script src="assets/js/main.js?v=6"></script>
 </body>
 </html>

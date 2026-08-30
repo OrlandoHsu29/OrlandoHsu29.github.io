@@ -6,7 +6,7 @@
 <title>Wrist-Talk 智能腕表固件 · 许博耀</title>
 <meta name="description" content="Wrist-Talk：STM32F411 + FreeRTOS + LVGL 智能腕表固件 —— 五层架构、Active Object 并发、OOP-in-C 驱动、低功耗与 OTA">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<link rel="stylesheet" href="../assets/css/main.css?v=5">
+<link rel="stylesheet" href="../assets/css/main.css?v=6">
 </head>
 <body>
 <div class="bg-grid"></div>
@@ -31,13 +31,13 @@
     <h1>Wrist-Talk <span class="thin">智能腕表系统</span></h1>
     <p class="lead">
       STM32F411CEU6（Cortex-M4F @100MHz，512KB Flash / 128KB RAM）+ FreeRTOS（CMSIS-RTOS2）+ LVGL 的智能手表固件工程。
-      我把「企业级固件架构」完整演练进一颗 MCU：五层单向依赖架构、Active Object 无锁并发、OOP-in-C 驱动体系、
-      七级自动初始化、声明式低功耗引擎、单槽双保险 IAP OTA。
+      我把「企业级固件架构」落地到一颗 MCU：五层单向依赖架构、Active Object 业务无共享锁并发、OOP-in-C 驱动体系、
+      七级自动初始化、声明式低功耗引擎、IAP BootLoader（App 位于 0x0800C000）。
     </p>
     <div class="tags">
       <span class="tag grn">STM32F411</span><span class="tag grn">FreeRTOS</span><span class="tag grn">LVGL</span>
       <span class="tag">CMSIS-RTOS2</span><span class="tag">ARMCC V5</span><span class="tag">Keil MDK</span>
-      <span class="tag">IAP OTA</span><span class="tag">低功耗</span>
+      <span class="tag">IAP BootLoader</span><span class="tag">低功耗</span>
     </div>
     <div class="meta-row">
       <span>平台 <b>STM32F411CEU6</b></span>
@@ -64,12 +64,12 @@
       <p>
         这个项目源自 <b>Cane 适老化 AI 终端</b>的产品构想：语音主交互 + 按键辅助。但那套 ESP32 + OpenClaw 的技术栈
         与企业嵌入式开发的主流技术栈契合度不高，于是我把它 <b>重构为一套基于 STM32 技术栈的智能腕表系统</b>——硬件无法完全满足
-        产品设计，但整套技术栈（STM32 / FreeRTOS / LVGL / IAP）是企业最常用的组合，值得系统掌握。
+      产品设计，但整套技术栈（STM32 / FreeRTOS / LVGL / IAP）是嵌入式产品中常见的组合，值得系统掌握。
       </p>
       <p>
-        工程定位为完整的企业级固件实践：架构上采用分层与依赖注入，并发上采用无锁 Active Object 模型，
-        驱动上采用 OOP 与表驱动，可靠性上引入看门狗、统一错误码与三层防线校时，并以单槽双保险 OTA 收尾，
-        设计对齐 Linux 内核与 AUTOSAR 的工程思想。
+        工程定位为面向企业固件实践的学习工程：架构上采用分层与依赖注入，并发上采用 Active Object 模型（各对象串行处理自己的状态，业务层不共享可变状态），
+        驱动上采用 OOP 与表驱动，可靠性上引入看门狗、统一错误码与三层防线校时，并以单槽双保险 IAP BootLoader 收尾，
+        设计借鉴 Linux 内核与 AUTOSAR 的工程思想。
       </p>
     </div>
   </div>
@@ -138,7 +138,7 @@
       <ul>
         <li><b>Board 硬件描述</b>：所有引脚 / 地址 / 参数（LED active_low、按键消抖时间、LCD 分辨率、3 条 I2C 总线的 SCL/SDA、传感器地址、看门狗引脚）集中在一个编译期静态文件里，轻量版 Device Tree。</li>
         <li><b>组合根</b>（<code>App/device_registry.c</code>）：全系统唯一「创建对象 + 依赖注入」点。分三级挂载：DEVICE 级创建总线句柄 → COMPONENT 级创建全部芯片驱动 + 回调注入 + probe（ops-&gt;init 校验 ID，失败 Error_Handler 停启）→ READY 级开启外部看门狗。</li>
-        <li><b>依赖铁律</b>：上层只依赖下层，下层绝不 include 上层；换 MCU 只需重写 Platform 层。</li>
+        <li><b>依赖铁律</b>：上层只依赖下层，下层绝不 include 上层；MCU 相关实现集中在 Core / Platform / Board，迁移 MCU 时主要替换这些适配层。</li>
       </ul>
     </div>
   </div>
@@ -174,7 +174,7 @@
           <text x="310" y="136" fill="#5d6f85" font-size="10.5">dispatch 串行处理</text>
           <text x="310" y="154" fill="#5d6f85" font-size="10.5">无事件 → 阻塞挂起</text>
           <text x="310" y="186" fill="#3ee6a4" font-size="10.5">队列串行化</text>
-          <text x="310" y="202" fill="#3ee6a4" font-size="10.5">= 无锁并发</text>
+          <text x="310" y="202" fill="#3ee6a4" font-size="10.5">= 业务无共享锁</text>
           <text x="310" y="222" fill="#5d6f85" font-size="10.5">实例：HomeAO /</text>
           <text x="310" y="238" fill="#5d6f85" font-size="10.5">SensorAO / PowerAO</text>
 
@@ -195,8 +195,8 @@
     <div class="prose reveal">
       <ul>
         <li><b>两段式管线</b>：ISR 只做限流与投递（如按键 EXTI 里 tick 消抖 + 只投 key_id），业务判断全在任务上下文。</li>
-        <li><b>LVGL 线程安全</b>：LVGL 非线程安全，跨线程 UI 更新统一走 <code>lv_async_call</code>——HomeAO 的 dispatch 只存数据，回调在 LvglTask 上下文异步执行。</li>
-        <li><b>RTOS 抽象</b>（<code>Platform/os_if.c</code>）：队列 / 互斥 / 事件标志 / 任务 / 延时全部封装成项目自有接口，换 RTOS 只改一个文件。</li>
+        <li><b>LVGL 线程边界</b>：LVGL 非线程安全，跨线程 UI 更新统一投递到 <code>LvglTask</code> 上下文执行；HomeAO 的 dispatch 只更新业务数据，再通过 <code>lv_async_call</code> 异步触发 UI 操作。</li>
+        <li><b>RTOS 抽象</b>（<code>Platform/os_if.c</code>）：队列 / 互斥 / 事件标志 / 任务 / 延时集中封装成项目自有接口，迁移 RTOS 时将适配范围收口在这一层。</li>
         <li><b>统一错误码</b>：<code>error_t</code> enum（非 #define，调试器可见符号名）；「count-or-error」模式对齐 Linux 内核（正数=字节数、负数=错误码）。</li>
       </ul>
     </div>
@@ -219,16 +219,16 @@
     <h3 class="sub-title">SPI + ST7789 显示屏 <span class="idx">软件 NSS + DMA 渲染管线</span></h3>
     <div class="prose reveal">
       <ul>
-        <li>CS 软件控制：传输前拉低、DMA 完成后由 SPI 空闲中断补拉高（硬件 NSS 在字节间隙会释放 CS，ST7789 需要整帧低）。</li>
+        <li>CS 软件控制：传输前拉低，DMA 完成后确认 SPI 已发送完毕（检查 TXE / BSY）再拉高，保证 ST7789 一次命令或整帧传输期间 CS 持续有效。</li>
         <li>初始化序列<b>表驱动</b>：<code>st7789_init.h</code> 是厂商寄存器纯数据表，<code>lcd_send_init_sequence</code> 是通用发送器——<b>换 ILI9341 只换表</b>。</li>
-        <li>像素数据走 SPI DMA：<code>lcd_write → spi_transmit_dma → HAL_SPI_TxCpltCallback → lcd_notify_flush_done()</code> 回调 LVGL，CPU 传输期间不被占用。</li>
+        <li>最终像素数据走 SPI DMA：窗口命令用阻塞 SPI 完成后，<code>lcd_write → spi_transmit_dma → HAL_SPI_TxCpltCallback → 等待 BSY=0 → lcd_notify_flush_done → lv_disp_flush_ready</code>；DMA 完成前不占用 CPU，CS 在整个窗口命令 + 像素数据事务期间保持低电平。</li>
       </ul>
     </div>
 
-    <h3 class="sub-title">UART：DMA 接收 + IDLE 中断帧检测 + 环形缓冲</h3>
+    <h3 class="sub-title">UART：DMA 接收 + 手动 IDLE 中断帧检测 + 环形缓冲</h3>
     <div class="prose reveal">
       <ul>
-        <li><code>HAL_UARTEx_ReceiveToIdle_DMA</code>：DMA + 总线空闲中断结合，帧结束自动触发；ISR 里用 <code>RxXferSize - DMA 剩余计数器</code> 算帧长，写 volatile 变量——<b>ISR 不调任何 RTOS API</b>。</li>
+        <li><code>HAL_UART_Receive_DMA</code> 配合手动开启 IDLE 中断：ISR 读取 DMA 剩余计数得到本帧长度，记录到 volatile 变量，并调用 ISR-safe 的事件标志接口唤醒消费任务；帧解析仍由任务完成。</li>
         <li>任务侧 <code>uart_read_frame</code> 消费：更新环形缓冲写指针（256B、2 的幂掩码取模）→ 置事件标志 → 阻塞等帧 → 读出。</li>
         <li>承载两路业务：调试 AT 控制台 + BLE 模块（KT6328）透传通道。</li>
       </ul>
@@ -247,14 +247,14 @@
     <div class="prose reveal">
       <ul>
         <li>手机 App ↔ BLE ↔ UART 帧 ↔ MCU，AT 协议承载业务命令；<code>at_parser</code> 注册制命令引擎，命令表由 App 层注入（组合根），引擎只做路由。</li>
-        <li>OV 家族命令：<code>OV+VERSION</code>（版本号单一信息源 version.h）、<code>OV+SEND</code>（上报温湿度时间等 7 行数据，读无锁快照）、<code>OV+ST=</code> 校时——<b>三层防线</b>：逐位数字校验 → 范围校验 → 驱动返回值校验，外部输入永远不可信。</li>
+        <li>OV 家族命令：<code>OV+VERSION</code>（版本号单一信息源 version.h）、<code>OV+SEND</code>（上报温湿度时间等 7 行数据，读取单写者缓存）、<code>OV+ST=</code> 校时——<b>三层防线</b>：逐位数字校验 → 范围校验 → 驱动返回值校验，外部输入永远不可信。</li>
         <li>手写扫描切分命令名（不用 strtok/sscanf——不可重入 / 格式僵化）；未知命令显式报错，不静默吞掉。</li>
       </ul>
     </div>
 
     <h3 class="sub-title">传感器统一采样调度 <span class="idx">TIM 硬件节拍</span></h3>
     <div class="prose reveal">
-      <p>TIM11 50ms 溢出中断 → <code>ao_post_event</code> 投递节拍（ISR 只投事件）→ SensorAO dispatch 串行执行：高频通道每 50ms 采 PPG 原始波形（20Hz 足够还原心率），低频通道按分频（先加后除防截断）采温湿度 / 姿态 / 罗盘 / 气压。结果写 <code>g_sensor_cache</code> 无锁快照（单写者），BLE 命令任务只读。</p>
+      <p>TIM11 50ms 溢出中断 → <code>ao_post_event</code> 投递节拍（ISR 只投事件）→ SensorAO dispatch 串行执行：高频通道每 50ms 采 PPG 原始波形（20Hz 满足当前心率估计需求），低频通道按分频（先加后除防截断）采温湿度 / 姿态 / 罗盘 / 气压。结果写入 <code>g_sensor_cache</code>，由单一写者更新，BLE 命令任务只读。</p>
     </div>
   </div>
 </section>
@@ -269,8 +269,8 @@
     <div class="tbl-wrap reveal">
       <table class="term-table">
         <tr><th>模式</th><th>电源域</th><th>唤醒源</th><th>唤醒代价</th></tr>
-        <tr><td><b>SLEEP</b></td><td>仅 CPU 停，外设时钟全跑，SRAM/寄存器全保持</td><td>任意中断</td><td>0 cycle，直接继续执行</td></tr>
-        <tr><td><b>STOP</b></td><td>外设停、SRAM 保持、<b>RTC/备份域活</b></td><td>EXTI / RTC 唤醒定时器</td><td>~10μs，需重配系统时钟</td></tr>
+        <tr><td><b>SLEEP</b></td><td>CPU 停止取指，已开启时钟的外设继续运行，SRAM/寄存器保持</td><td>任意中断</td><td>无需重配时钟，按中断延迟恢复执行</td></tr>
+        <tr><td><b>STOP</b></td><td>大部分外设时钟停止、SRAM 保持、<b>RTC/备份域活</b></td><td>EXTI / RTC 唤醒定时器</td><td>需重配系统时钟，延迟取决于时钟配置</td></tr>
         <tr><td><b>STANDBY</b></td><td>仅备份域（RTC+备份寄存器），SRAM 清零</td><td>RTC / WKUP 引脚</td><td>冷启动（进 Reset_Handler）</td></tr>
       </table>
     </div>
@@ -290,7 +290,7 @@
     </div>
     <div class="prose reveal">
       <p>超时迁移也是声明式表：ACTIVE 无操作 10s→DIM，30s→IDLE，60s→STOP；CHARGE/SPORT 无超时降级。</p>
-      <p><b>面向切面（AOP）的功耗引擎</b>（<code>App/power_manager_ao</code>，Linux cpuidle / RT-Thread pm 同款模式）：业务模块只发布事件（按键/触摸/充电/抬腕），<b>不写任何省电代码</b>；引擎按迁移规则表逐子系统 diff 执行过渡——LCD 0↔非0 走 open/close（面板 Sleep Out/In + PWM），非 0 之间走 ioctl 亮度；传感器采样周期经 SensorAO 命令队列修改（<b>队列即锁</b>）；BLE 模块直接断电（KT6328 电源脚 PA8）。</p>
+      <p><b>面向切面（AOP）的功耗引擎</b>（<code>App/power_manager_ao</code>，借鉴 Linux cpuidle / RT-Thread pm 的模式管理思想）：业务模块只发布事件（按键/触摸/充电/抬腕），<b>不直接编写省电操作</b>；引擎按迁移规则表逐子系统 diff 执行过渡——LCD 0↔非0 走 open/close（面板 Sleep Out/In + PWM），非 0 之间走 ioctl 亮度；传感器采样周期经 SensorAO 命令队列修改，以队列作为串行化边界；BLE 模块直接断电（KT6328 电源脚 PA8）。</p>
       <p>关键细节：STOP 前清 WU/SB 唤醒标志 + <code>HAL_SuspendTick()</code>（防 pending tick 唤醒、防唤醒后时钟未重配时 tick 错频）；入睡循环「排空队列遗留事件 → 入睡 → 唤醒 → 再排空」；外部看门狗用 OS_PRIO_LOW 最低优先级喂狗——业务全卡死时喂狗排不上队，狗超时复位（看门狗本意）。</p>
     </div>
   </div>
@@ -301,7 +301,7 @@
     <h2 class="sec-title reveal"><span class="prompt">$</span> OTA：单槽双保险 IAP <span class="idx">ota/</span></h2>
     <div class="sec-line reveal"></div>
     <div class="prose reveal">
-      <p>App 实测 ~392KB，512KB Flash 上做 A/B 双槽每槽仅 208KB <b>物理放不下</b>——所以选择「单槽 + 双保险」，这是硬件约束下的最优解。</p>
+      <p>BootLoader 与 App 采用明确的 Flash 分区：BootLoader 占用 S0–S1，S2 保存升级标志，App 从 0x0800C000 启动。受 512KB Flash 容量限制，App 区约 464KB，无法同时容纳两份完整镜像，因此采用「单槽 + 双保险」方案，保证掉电后不跳转到半成品。</p>
     </div>
     <div class="reveal" style="margin:14px 0">
       <div class="term"><div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">flash.svg · 分区（单一信息源 shared/ota_protocol.h）</span></div>
@@ -319,7 +319,7 @@
           <text x="154" y="94" fill="#5d6f85" font-size="10">16 KB</text>
           <rect x="204" y="36" width="552" height="64" rx="6" fill="rgba(86,182,255,.07)" stroke="#56b6ff" stroke-opacity=".5"/>
           <text x="220" y="62" fill="#56b6ff" font-size="11">S3–S7</text>
-          <text x="220" y="80" fill="#d7e2ee" font-size="12">App（实测 ~392KB，余量充足）</text>
+          <text x="220" y="80" fill="#d7e2ee" font-size="12">App（0x0800C000，464KB）</text>
           <text x="220" y="94" fill="#5d6f85" font-size="10">464 KB</text>
           <text x="24" y="124" fill="#5d6f85" font-size="10.5">0x08000000</text>
           <text x="140" y="124" fill="#5d6f85" font-size="10.5">0x08008000</text>
@@ -345,10 +345,10 @@ uint32_t pc = *(<span class="k">volatile</span> uint32_t *)(APP_BASE + <span cla
       <p>① <code>__disable_irq()</code> 关全局中断 → ② <code>HAL_RCC_DeInit()+HAL_DeInit()</code> 复位外设到上电默认 → ③ SysTick 三个寄存器清零 → ④ <code>SCB-&gt;VTOR = 0x0800C000</code> 重定位向量表 → ⑤ 读 App 向量表 [0]=MSP、[4]=Reset_Handler → ⑥ <code>__set_MSP()</code> + 跳转。顺序不能乱（先 VTOR 再跳，否则第一条指令前中断进错表）。</p>
       <h3>升级触发（两条路径）与 Ymodem</h3>
       <ul>
-        <li>开发 / 救砖：按住 KEY1 上电（500ms 防抖二次确认）；<b>量产路径（BLE）</b>：手机发 <code>OV+OTA</code> → App 往 <b>RTC 备份寄存器写魔数</b>（0x4F54414F）→ <code>NVIC_SystemReset()</code> → BootLoader 检测到魔数进升级模式并清魔数。选备份寄存器而非 Flash 标志：写 Flash 要擦扇区、阻塞取指上百毫秒且冻结喂狗任务，备份寄存器是纯寄存器写、微秒级、VBAT 掉电不丢。</li>
+        <li>升级触发：按住 KEY1 上电（500ms 防抖二次确认），或由 BLE 命令写入 <b>RTC 备份寄存器魔数</b>（0x4F54414F）后执行 <code>NVIC_SystemReset()</code>；BootLoader 检测到魔数后进入升级模式并清除魔数。选备份寄存器而非 Flash 标志：写 Flash 要擦扇区、阻塞取指并影响看门狗协作；备份寄存器是纯寄存器写，速度快，且<b>只要备份域仍由 VBAT 供电就能跨软件复位保留</b>。</li>
         <li>Ymodem：STX 1024B 大帧 / SOH 128B 小帧，帧头（序号+~序号）+ CRC16；接收状态机「发 'C' 进 CRC 模式 → 收文件名包（解析声明大小，超限拒绝）→ 擦 App 区 → 逐帧收数据写 Flash（每帧 CRC16 + 序号校验，错误 NAK 重传，10 次超限取消）」；<b>修复原版 ST 例程的坑</b>：末帧不足 1024B 按声明大小截断、不把 0x1A 填充写进 Flash；尾部不足 4 字节补 0xFF 凑整字。</li>
-        <li>看门狗协作：进升级模式开外狗 + Ymodem 等待/接收循环喂狗 + 擦扇区循环喂狗（擦 Flash 期间取指暂停，5 个扇区 ~1s 必须分段喂）+ 跳转前关狗——升级挂死自动复位重进升级模式。</li>
-        <li>工具链：BootLoader 与 App 各一份手写 .sct（App 偏移 0x0800C000 且<b>保留七级初始化的 ER_INIT_TABLE 段</b>，Keil 自动生成会丢手写段）；After Build 跑 pack_ota.py 打包。</li>
+        <li>看门狗协作：进升级模式启用外部看门狗，Ymodem 等待 / 接收循环正常喂狗；Flash 擦除期间取指可能暂停，因此看门狗超时时间覆盖单次擦除窗口，并在每次擦除之间喂狗；跳转前关闭看门狗——升级挂死时自动复位并重进升级模式。</li>
+        <li>工具链：BootLoader 与 App 各一份手写 .sct，App 链接地址为 0x0800C000 并<b>保留七级初始化的 ER_INIT_TABLE 段</b>；After Build 自动调用 pack_ota.py 生成带 CRC-32 footer 的升级包。</li>
       </ul>
     </div>
   </div>
@@ -362,11 +362,11 @@ uint32_t pc = *(<span class="k">volatile</span> uint32_t *)(APP_BASE + <span cla
       <table class="term-table">
         <tr><th>能力维度</th><th>本工程的落地</th></tr>
         <tr><td><b>架构设计</b></td><td>五层单向依赖 · 组合根（唯一 new 点）· 依赖注入（DIP）· Board 描述文件（轻量 Device Tree）</td></tr>
-        <tr><td><b>并发模型</b></td><td>Active Object 无锁框架 · ISR 两段式管线 · 事件内联传值 · LVGL 跨线程安全</td></tr>
+        <tr><td><b>并发模型</b></td><td>Active Object 业务无共享锁 · ISR 两段式管线 · 事件内联传值 · LVGL 单线程边界</td></tr>
         <tr><td><b>驱动开发</b></td><td>OOP-in-C（不透明句柄 + ops 虚表）· 表驱动初始化 · SPI/UART DMA · 软件 I2C（DWT 时序）</td></tr>
         <tr><td><b>健壮性</b></td><td>外部看门狗 · 统一 error_t 错误码 · count-or-error · 三层防线校时 · 未知命令显式报错</td></tr>
         <tr><td><b>低功耗</b></td><td>三种电源域分析 · 六场景声明式模型 · AOP 功耗引擎 · diff 过渡 · HAL_SuspendTick 细节</td></tr>
-        <tr><td><b>系统升级</b></td><td>单槽双保险 IAP · 先作废再写入 · 整包 CRC-32 · 向量表校验 · Ymodem · BLE 触发</td></tr>
+        <tr><td><b>系统升级</b></td><td>单槽双保险 IAP BootLoader · 先作废再写入 · 整包 CRC-32 · 向量表校验 · Ymodem · BLE / 按键触发</td></tr>
       </table>
     </div>
 
@@ -394,6 +394,6 @@ uint32_t pc = *(<span class="k">volatile</span> uint32_t *)(APP_BASE + <span cla
   </div>
 </footer>
 
-<script src="../assets/js/main.js?v=5"></script>
+<script src="../assets/js/main.js?v=6"></script>
 </body>
 </html>
