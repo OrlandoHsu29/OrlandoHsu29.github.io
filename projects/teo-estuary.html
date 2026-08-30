@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teo Estuary 潮汇 · 潮汕话语料平台 · 许博耀</title>
+<meta name="description" content="Teo Estuary（潮汇）：开源的潮汕话语音数据收集与标注平台 —— 三大采集模块、TeoDMP 管理后台、自维护词典、Teo-Emilia 预处理服务">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../assets/css/main.css?v=4">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<a class="back-btn" href="../index.html#projects" title="返回项目列表" aria-label="返回项目列表">←</a>
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="../index.html"><span class="tilde">~</span>/hsu<span class="cursor">_</span></a>
+    <div class="nav-proj"><a href="../index.html#projects">~/projects</a>/<span class="accent">teo-estuary</span></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换浅色/深色模式" title="切换主题">
+  <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">~</a>/projects/<span class="here">teo-estuary</span></div>
+    <h1>Teo Estuary <span class="thin">潮汇 · 潮汕话语料收集与标注平台</span></h1>
+    <p class="lead">
+      基于方言场景优化的开源语料平台：通过<b>前端三大采集模块 + TeoDMP 管理后台 + Teo-Emilia 预处理服务</b>，
+      高效收集、清洗、标注潮汕话语音数据，用于训练潮汕话 ASR 模型；并围绕<b>自维护词典</b>建立
+      「减少训练成本 · 提高打标效率 · AI 可理解」的完整闭环。
+    </p>
+    <div class="tags">
+      <span class="tag grn">开源 · MIT</span><span class="tag">Flask</span><span class="tag">MySQL / Redis</span>
+      <span class="tag">Docker</span><span class="tag">ASR</span><span class="tag">数据管线</span>
+      <span class="tag">Web Audio API</span>
+    </div>
+    <div class="meta-row">
+      <span>开源地址 <b><a href="https://github.com/OrlandoHsu29/Teo-Estuary" target="_blank" rel="noopener">github.com/OrlandoHsu29/Teo-Estuary ↗</a></b></span>
+      <span>协议 <b>MIT</b></span>
+      <span>时间 <b>2025.10 – 至今（暂时搁置）</b></span>
+    </div>
+    <div class="stat-strip">
+      <div class="stat"><div class="num">3<small> 模块</small></div><div class="lbl">前端采集：录制 / 上传 / ASR 测试</div></div>
+      <div class="stat"><div class="num">1<small> 后台</small></div><div class="lbl">TeoDMP 数据管理（审核/词典/导入导出）</div></div>
+      <div class="stat"><div class="num">3<small> 倍</small></div><div class="lbl">数据集生产效率</div></div>
+      <div class="stat"><div class="num">1<small> 版</small></div><div class="lbl">自训潮汕话 ASR（FunASR / Paraformer）</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 项目介绍 <span class="idx">intro/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>
+        <b>Teo Estuary（潮汇）</b>是一个开源的潮汕话语料收集与标注平台。平台名称取 "Estuary"（河口 / 汇流处）之意，
+        象征各地的潮汕方言语料在此汇聚。针对方言场景做了大量功能优化，通过该平台可以高效采集大量潮汕话语音数据并完成标注，
+        用于训练潮汕话自动语音识别（ASR）模型，推动<b>方言数字化保护与传承</b>。
+      </p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot wide"><img src="../assets/img/teo-home.jpg" alt="Teo Estuary 平台首页" loading="lazy"><figcaption>平台首页 Teo Estuary</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 前端语料收集 · 三大模块 <span class="idx">collect/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <ul>
+        <li><b>Teo Recorder — 人工音频录制</b>：采集者通过浏览器实时录制潮汕话音频。拟物风格录音机界面，提供普通话参考文本，支持空格键快捷录制、实时音量监测与时长进度条，录制完成后可预览并上传。</li>
+        <li><b>Teo Phonograph — 音频素材上传</b>：上传已有潮汕话音频文件，由 Teo-Emilia 服务进行 VAD（语音活动检测）、质量筛选和初步 ASR 自动转写。拟物风格 CD 播放器界面，支持批量上传，适合批量采集已有素材。</li>
+        <li><b>Teo Translator — ASR 模型效果测试</b>：测试当前版本 ASR 模型的识别效果。拟物风格传呼机界面，按住录音，音频发送至 ASR 服务后以打字机效果展示识别结果，便于开放给他人体验。</li>
+      </ul>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/teo-recorder.jpg" alt="Teo Recorder 录制界面" loading="lazy"><figcaption>Teo Recorder · 人工音频录制</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/teo-phonograph.jpg" alt="Teo Phonograph 上传界面" loading="lazy"><figcaption>Teo Phonograph · 音频素材上传</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/teo-translator.jpg" alt="Teo Translator ASR 测试界面" loading="lazy"><figcaption>Teo Translator · ASR 效果测试</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> TeoDMP · 数据管理后台 <span class="idx">dmp/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>
+        管理后台提供<b>语料审核、词块编辑、数据统计、词典管理、数据导入导出</b>等完整的数据管理功能：
+        对 Teo Phonograph 上传的音频进行批量处理与转录，借助 Emilia 服务完成 VAD 和初步 ASR，
+        再通过 <b>jieba 分词 + 潮语词典逐词翻译</b>生成标注底稿；支持 <b>API Key 多租户管理</b>与渠道用量追踪。
+      </p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/teo-dmp-review.jpg" alt="DMP 数据审核" loading="lazy"><figcaption>DMP · 数据审核 Review</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/teo-dmp-dict.jpg" alt="潮语词典查询" loading="lazy"><figcaption>DMP · 潮语词典查询</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/teo-dmp-import.jpg" alt="DMP 数据导入" loading="lazy"><figcaption>DMP · 数据导入</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/teo-dmp-export.jpg" alt="DMP 数据导出" loading="lazy"><figcaption>DMP · 数据导出</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/teo-dmp-apikey.jpg" alt="API Key 管理" loading="lazy"><figcaption>DMP · API Key 多租户管理</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 平台工作流 <span class="idx">workflow/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/teo-workflow.jpg" alt="Teo-Estuary 平台工作流" loading="lazy"><figcaption>Teo-Estuary 平台工作流</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/teo-dmp-workflow.jpg" alt="Teo-DMP 工作流" loading="lazy"><figcaption>Teo-DMP 数据处理工作流</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 核心特性 <span class="idx">features/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <h3>自维护词典（让 AI 读懂潮汕话）</h3>
+      <p>完全正字或完全谐音的转写方案都存在缺陷（参考 teochew-g2p 项目对「歹看正字法」的讨论），
+        因此需要基于一套新原则——<b>谐音与象形结合</b>——为发音与汉字建立绑定，形成自维护词典，实现三个目的：</p>
+      <ol>
+        <li>ASR 能正确识别出自维护词典中的词；</li>
+        <li>人看到这个词能想到对应的音；</li>
+        <li>大模型通过 <b>RAG 或直接上传词典</b>后，能理解 ASR 结果的语义。</li>
+      </ol>
+      <p>由于自维护词典中的词在中文语境下并不通用，最终用<b>大模型介入文本理解作为 ASR 后处理</b>，直接把识别结果翻译成中文；
+        为此同步维护一套<b>词典 skill</b>，让 AI 理解 ASR 结果的语义。这套机制也服务于 Cane 终端的「方言语音输入」。</p>
+      <h3>Teo-Emilia 正向反馈循环</h3>
+      <p>Teo-Emilia 是基于 <a href="https://github.com/open-mmlab/Amphion/tree/main/preprocessors/Emilia" target="_blank" rel="noopener">Amphion/Emilia-Pipe</a> 二开的音频预处理服务，
+        与整个平台形成<b>正向反馈循环</b>：人工打标积累语料 → 训练 ASR 模型 → 模型部署回 Emilia 辅助下一批音频的自动清洗与打标
+        → 打标效率提升 → 语料积累加速 → 模型效果更好。<b>越用越快</b>，人工标注干预逐步减少。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 技术架构 <span class="idx">arch/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="fig-grid reveal">
+      <figure class="shot wide"><img src="../assets/img/teo-arch.jpg" alt="技术架构图" loading="lazy"><figcaption>技术架构</figcaption></figure>
+    </div>
+    <div class="tbl-wrap reveal">
+      <table class="term-table">
+        <tr><th>层级</th><th>技术</th><th>用途</th></tr>
+        <tr><td><b>前端</b></td><td>HTML5 / CSS3 / JavaScript</td><td>页面结构与交互逻辑</td></tr>
+        <tr><td><b>前端音频</b></td><td>Web Audio API · MediaRecorder API</td><td>音频录制与播放</td></tr>
+        <tr><td><b>后端</b></td><td>Python 3.11+ / Flask 3</td><td>RESTful API 服务</td></tr>
+        <tr><td><b>存储</b></td><td>MySQL 8.0 · Redis · SQLite</td><td>主数据 / 翻译缓存与限流 / 词典库</td></tr>
+        <tr><td><b>分词与翻译</b></td><td>jieba + 潮语词典</td><td>普通话分词与逐词翻译</td></tr>
+        <tr><td><b>部署</b></td><td>Docker Compose · Pixi</td><td>容器化一键部署 / 统一环境管理</td></tr>
+      </table>
+    </div>
+    <div class="tbl-wrap reveal">
+      <table class="term-table">
+        <tr><th>外部服务</th><th>用途</th></tr>
+        <tr><td><b>Teo-Emilia</b></td><td>音频 VAD / 质量筛选 / 初步 ASR（5029）</td></tr>
+        <tr><td><b>Teo-ASR Service</b></td><td>潮汕话语音识别（5026）</td></tr>
+        <tr><td><b>Dify Agent</b></td><td>参考文本生成工作流</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> ASR 与 Demo <span class="idx">asr/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>基于开源数据集训练出 <b>1 版潮汕话 ASR 模型</b>（FunASR 的 Paraformer），已实现基本对话场景的 demo：</p>
+      <ol>
+        <li>说潮汕话 → 自训 ASR 模型转为潮汕话文本；</li>
+        <li>把维护的潮语 skill 输入智能体 → 潮汕话文本经翻译智能体转为 AI 能看懂的普通话。</li>
+      </ol>
+      <p>长期愿景：让不会说普通话的老年群体直接用潮汕话控制 AI。需要说明的是：微信已上线潮汕话语音转文字能力，
+        个人开发在资源上难以与厂商相比；项目目前<b>暂时搁置</b>，但数据平台、词典与 ASR 管线的工程经验可完整迁移。</p>
+      <div class="callout reveal" style="margin-top:16px"><span class="t">关联项目</span>平台训练的方言 ASR 与词典 skill，是 <a href="cane-terminal.html">Cane 适老化 AI 终端</a>「方言语音输入」的技术底座。</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 开源情况 <span class="idx">oss/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>项目基于 <b>MIT License</b> 开源；音频预处理服务 <b>Teo-Emilia</b>（基于 Emilia 二开）也已开源。
+        后续规划：跟读文本生成智能体开源、Teo-Recorder 音频接入 Emilia 清洗、
+        ASR 模型上传 ModelScope / HuggingFace、词典 skill 同步开源。</p>
+    </div>
+  </div>
+</section>
+
+<div class="pager reveal">
+  <a href="cane-terminal.html"><div class="dir">← prev</div><div class="name">~/projects/cane-terminal</div></a>
+  <a class="next" href="pack-line.html"><div class="dir">next →</div><div class="name">~/projects/pack-line</div></a>
+</div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="term">
+      <div class="term-body">
+        <div class="line"><span class="ok">$</span> ./build.sh --target=teo-estuary <span class="info">→</span> done</div>
+        <div class="line dim">© <span id="year">2026</span> Orlando Hsu · Embedded Software Engineer</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="copy">~/hsu — 开源 · ASR · 数据管线</div>
+      <div class="copy"><a href="#top">back to top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js?v=4"></script>
+</body>
+</html>

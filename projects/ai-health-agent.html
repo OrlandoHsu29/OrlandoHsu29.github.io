@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 健康管家 · 智能体 + RAG · 许博耀</title>
+<meta name="description" content="广东延康科技实习：Dify 搭建健康咨询智能体，3 Sub-Agent + RAG 个性化健康档案">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../assets/css/main.css?v=4">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<a class="back-btn" href="../index.html#projects" title="返回项目列表" aria-label="返回项目列表">←</a>
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="../index.html"><span class="tilde">~</span>/hsu<span class="cursor">_</span></a>
+    <div class="nav-proj"><a href="../index.html#projects">~/projects</a>/<span class="accent">ai-health-agent</span></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换浅色/深色模式" title="切换主题">
+  <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">~</a>/projects/<span class="here">ai-health-agent</span></div>
+    <h1>AI 健康管家 <span class="thin">智能体 + RAG · 实习项目</span></h1>
+    <p class="lead">
+      广东延康科技有限公司技术部 · AI 应用开发实习（2025.01 – 2025.09）。
+      基于 Dify 搭建健康咨询智能体：3 个 Sub-Agent 集成 Main Agent，对话中自动沉淀结构化健康档案，
+      通过针对性 RAG 检索提供<b>个性化健康咨询</b>，并负责本地大模型部署与端侧智能体封装。
+    </p>
+    <div class="tags">
+      <span class="tag grn">实习项目</span><span class="tag">Dify</span><span class="tag">RAG</span>
+      <span class="tag">多 Sub-Agent</span><span class="tag">Flask</span><span class="tag alt">VLLM / Ktransformers</span>
+    </div>
+    <div class="meta-row">
+      <span>时间 <b>2025.01 – 2025.09</b></span>
+      <span>落地 <b>微信小程序 + 公司 APP</b></span>
+      <span>技术栈 <b>Python (Flask) · Dify · RAG</b></span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 智能体架构 <span class="idx">agent/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>搭建了 <b>3 个 Sub-Agent</b>（文件处理 / 自动对话总结 / 个人健康档案检索）并集成到一个 <b>Main Agent</b>，实现：</p>
+      <ol>
+        <li><b>信息提取与存储</b>：对话中自动把用户提及的健康状况、影响健康的活动总结成结构化文本存入 RAG；</li>
+        <li><b>数据绑定</b>：用元数据标注把数据与用户绑定；</li>
+        <li><b>个性化检索</b>：每次对话检索时，RAG 只召回属于该用户的健康档案，实现长期记忆与精准召回。</li>
+      </ol>
+      <p>工作流基于 Dify 图形化搭建，本质逻辑与 LangChain 一致；同时负责将智能体接入后端，<b>已在微信小程序和公司 APP 上跑通</b>。</p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/agent-workflow.jpg" alt="Dify 主工作流" loading="lazy"><figcaption>Dify 主工作流（Main Agent）</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/agent-auto-summary.jpg" alt="对话结束自动触发结构化总结" loading="lazy"><figcaption>结束对话后自动触发话题结构化总结</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/agent-kb-data.jpg" alt="知识库结构化数据展示" loading="lazy"><figcaption>知识库结构化数据展示</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/agent-archive.jpg" alt="自动构建知识库文档并存储健康档案" loading="lazy"><figcaption>自动构建知识库文档并存储健康档案</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 本地模型部署与收获 <span class="idx">notes/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <ul>
+        <li>通过 ModelScope / HuggingFace 拉取大模型，基于 <b>VLLM / Ktransformers</b> 等框架本地部署测试，将符合需求的小参数模型接入 Dify 做端侧智能体开发与封装；</li>
+        <li>2025 上半年就接触到 <b>Claude Code / Agent</b> 辅助开发，较大多数人提前约一年将 AI 用于工程实践，对 AI 技术路线与开发框架形成系统认知。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="pager reveal">
+  <a href="machine-tool.html"><div class="dir">← prev</div><div class="name">~/projects/machine-tool</div></a>
+  <a class="next" href="../index.html#projects"><div class="dir">back →</div><div class="name">~/home · 项目总览</div></a>
+</div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="term">
+      <div class="term-body">
+        <div class="line"><span class="ok">$</span> ./build.sh --target=ai-health-agent <span class="info">→</span> done</div>
+        <div class="line dim">© <span id="year">2026</span> Orlando Hsu · Embedded Software Engineer</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="copy">~/hsu — Dify / RAG / 本地模型部署</div>
+      <div class="copy"><a href="#top">back to top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js?v=4"></script>
+</body>
+</html>

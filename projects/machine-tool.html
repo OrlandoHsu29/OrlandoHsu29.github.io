@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五轴机床数字孪生监测 · 许博耀</title>
+<meta name="description" content="五轴机床数字孪生监测：传感器采集、MQTT 上云、Flask 后端、React 数字孪生">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../assets/css/main.css?v=4">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<a class="back-btn" href="../index.html#projects" title="返回项目列表" aria-label="返回项目列表">←</a>
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="../index.html"><span class="tilde">~</span>/hsu<span class="cursor">_</span></a>
+    <div class="nav-proj"><a href="../index.html#projects">~/projects</a>/<span class="accent">machine-tool</span></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换浅色/深色模式" title="切换主题">
+  <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">~</a>/projects/<span class="here">machine-tool-twin</span></div>
+    <h1>五轴机床数字孪生监测 <span class="thin">传感采集 · 上云 · 孪生</span></h1>
+    <p class="lead">
+      校内实验室项目（参与）：机床故障监测与数字孪生系统。负责<b>传感器采集与数据交互、Flask 后端搭建</b>，
+      打通「机床传感器 → MQTT → 华为云 IoTDA → 后端 → React 数字孪生前端」全链路。
+    </p>
+    <div class="tags">
+      <span class="tag">传感器采集</span><span class="tag">MQTT</span><span class="tag">华为云 IoTDA</span>
+      <span class="tag">Flask</span><span class="tag">React</span><span class="tag alt">APS 数字孪生</span>
+    </div>
+    <div class="meta-row">
+      <span>时间 <b>2024.02 – 2024.12</b></span>
+      <span>负责部分 <b>传感器采集与数据交互 · Flask 后端</b></span>
+      <span>算法 <b>ANFIS + LSTM 故障检测</b></span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 项目内容 <span class="idx">content/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>项目初期调研机床故障监测技术，发现可通过<b>主轴功率波动监测撞刀故障</b>并及时切断电源保护机床。
+        采集大量主轴功率数据与撞刀故障数据，清洗后先用 ANFIS 训练故障检测模型，后加入 LSTM 引入时间维度，
+        提高预测准确率。</p>
+      <ul>
+        <li><b>物联网采集</b>：在机床上部署传感器采集主轴功率、主轴温度，通过伺服电机编码器获取电机转速，经 <b>MQTT</b> 上传华为云 IoTDA 平台，再由数据转发到自建监控平台后端；</li>
+        <li><b>后端</b>：Flask 搭建数据监控平台后端；</li>
+        <li><b>数字孪生（React 前端）</b>：接入 AutoDesk APS 平台——电机温度 / 主轴温度超阈值时在模型上高亮并弹窗警告（热图警告）；采集处理伺服编码器运动数据，接入 APS 模型运动接口实现机床运动同步；</li>
+        <li><b>AI 应用</b>：把机床故障维修手册、性能参数、运维文献转化为 2000 条问答数据集，微调大模型后接入故障检测平台，运维人员遇到故障可快速获取维修方法。</li>
+      </ul>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/mt-web-1.png" alt="监控平台运行截图 1" loading="lazy"><figcaption>平台运行截图 1</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/mt-web-2.png" alt="监控平台运行截图 2" loading="lazy"><figcaption>平台运行截图 2</figcaption></figure>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot fit wide"><img src="../assets/img/mt-heatmap.gif" alt="数字孪生热图警告演示" loading="lazy"><figcaption>数字孪生 · 热图警告演示</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<div class="pager reveal">
+  <a href="pack-line.html"><div class="dir">← prev</div><div class="name">~/projects/pack-line</div></a>
+  <a class="next" href="ai-health-agent.html"><div class="dir">next →</div><div class="name">~/projects/ai-health-agent</div></a>
+</div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="term">
+      <div class="term-body">
+        <div class="line"><span class="ok">$</span> ./build.sh --target=machine-tool-twin <span class="info">→</span> done</div>
+        <div class="line dim">© <span id="year">2026</span> Orlando Hsu · Embedded Software Engineer</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="copy">~/hsu — MQTT / IoTDA / Flask / React</div>
+      <div class="copy"><a href="#top">back to top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js?v=4"></script>
+</body>
+</html>

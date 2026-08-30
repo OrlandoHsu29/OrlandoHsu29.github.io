@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wrist-Talk 智能腕表固件 · 许博耀</title>
+<meta name="description" content="Wrist-Talk：STM32F411 + FreeRTOS + LVGL 智能腕表固件 —— 五层架构、Active Object 并发、OOP-in-C 驱动、低功耗与 OTA">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../assets/css/main.css?v=4">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<a class="back-btn" href="../index.html#projects" title="返回项目列表" aria-label="返回项目列表">←</a>
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="../index.html"><span class="tilde">~</span>/hsu<span class="cursor">_</span></a>
+    <div class="nav-proj"><a href="../index.html#projects">~/projects</a>/<span class="accent">wrist-talk</span></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换浅色/深色模式" title="切换主题">
+  <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">~</a>/projects/<span class="here">wrist-talk</span></div>
+    <h1>Wrist-Talk <span class="thin">智能腕表系统</span></h1>
+    <p class="lead">
+      STM32F411CEU6（Cortex-M4F @100MHz，512KB Flash / 128KB RAM）+ FreeRTOS（CMSIS-RTOS2）+ LVGL 的智能手表固件工程。
+      我把「企业级固件架构」完整演练进一颗 MCU：五层单向依赖架构、Active Object 无锁并发、OOP-in-C 驱动体系、
+      七级自动初始化、声明式低功耗引擎、单槽双保险 IAP OTA。
+    </p>
+    <div class="tags">
+      <span class="tag grn">STM32F411</span><span class="tag grn">FreeRTOS</span><span class="tag grn">LVGL</span>
+      <span class="tag">CMSIS-RTOS2</span><span class="tag">ARMCC V5</span><span class="tag">Keil MDK</span>
+      <span class="tag">IAP OTA</span><span class="tag">低功耗</span>
+    </div>
+    <div class="meta-row">
+      <span>平台 <b>STM32F411CEU6</b></span>
+      <span>RTOS <b>FreeRTOS / CMSIS-RTOS2</b></span>
+      <span>UI <b>LVGL</b></span>
+      <span>工具链 <b>Keil MDK-ARM V5.06 · ARMCC V5 · .sct</b></span>
+      <span>时间 <b>2026.05 – 至今</b></span>
+    </div>
+    <div class="stat-strip">
+      <div class="stat"><div class="num">5<small> 层</small></div><div class="lbl">单向依赖架构</div></div>
+      <div class="stat"><div class="num">12<small> B</small></div><div class="lbl">事件内联载荷（无指针问题）</div></div>
+      <div class="stat"><div class="num">7<small> 级</small></div><div class="lbl">自动初始化序列</div></div>
+      <div class="stat"><div class="num">392<small> KB</small></div><div class="lbl">App 固件占用（512KB Flash）</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 项目概述 <span class="idx">overview/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>
+        这个项目源自 <b>Cane 适老化 AI 终端</b>的产品构想：语音主交互 + 按键辅助。但那套 ESP32 + OpenClaw 的技术栈
+        与企业嵌入式开发的主流技术栈契合度不高，于是我把它 <b>重构为一套基于 STM32 技术栈的智能腕表系统</b>——硬件无法完全满足
+        产品设计，但整套技术栈（STM32 / FreeRTOS / LVGL / IAP）是企业最常用的组合，值得系统掌握。
+      </p>
+      <p>
+        工程定位为完整的企业级固件实践：架构上采用分层与依赖注入，并发上采用无锁 Active Object 模型，
+        驱动上采用 OOP 与表驱动，可靠性上引入看门狗、统一错误码与三层防线校时，并以单槽双保险 OTA 收尾，
+        设计对齐 Linux 内核与 AUTOSAR 的工程思想。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 五层单向依赖架构 <span class="idx">arch/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>借鉴 AUTOSAR 分层思想 + Linux 设备模型，把固件拆成五层，<b>上层只依赖下层，下层绝不 include 上层</b>；跨层事件通知一律用回调注入（DIP）。</p>
+    </div>
+    <div class="reveal" style="margin:14px 0">
+      <div class="term"><div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">arch.svg · 五层单向依赖</span></div>
+      <div style="background:#0a0f18;padding:10px">
+      <svg viewBox="0 0 780 420" role="img" aria-label="五层单向依赖架构" style="width:100%;height:auto;display:block">
+        <defs>
+          <marker id="arw" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#3ee6a4"/>
+          </marker>
+        </defs>
+        <g font-family="Consolas, monospace">
+          <!-- arrow -->
+          <line x1="668" y1="30" x2="668" y2="340" stroke="#3ee6a4" stroke-width="1.6" marker-end="url(#arw)" stroke-dasharray="4 3"/>
+          <text x="688" y="150" fill="#5d6f85" font-size="11" letter-spacing="1">依赖方向</text>
+          <text x="688" y="166" fill="#3ee6a4" font-size="11" letter-spacing="1">上层 → 下层</text>
+          <text x="688" y="196" fill="#5d6f85" font-size="10">下层绝不</text>
+          <text x="688" y="210" fill="#5d6f85" font-size="10">include 上层</text>
+          <!-- layers -->
+          <g>
+            <rect x="20" y="20" width="560" height="56" rx="8" fill="#0f1622" stroke="#1f2b3d"/>
+            <text x="42" y="46" fill="#3ee6a4" font-size="14" font-weight="bold">L1</text>
+            <text x="76" y="46" fill="#d7e2ee" font-size="13">Core/</text>
+            <text x="42" y="66" fill="#5d6f85" font-size="10.5">CubeMX 生成的 HAL 初始化 · 只改 USER CODE 块</text>
+          </g>
+          <g>
+            <rect x="20" y="88" width="560" height="56" rx="8" fill="#0f1622" stroke="#1f2b3d"/>
+            <text x="42" y="114" fill="#3ee6a4" font-size="14" font-weight="bold">L2</text>
+            <text x="76" y="114" fill="#d7e2ee" font-size="13">Platform/</text>
+            <text x="42" y="134" fill="#5d6f85" font-size="10.5">MCU 无关抽象：gpio/spi/i2c/uart/pwm/rtc/power/os 接口 · error_code</text>
+          </g>
+          <g>
+            <rect x="20" y="156" width="560" height="56" rx="8" fill="#0f1622" stroke="#1f2b3d"/>
+            <text x="42" y="182" fill="#3ee6a4" font-size="14" font-weight="bold">L3</text>
+            <text x="76" y="182" fill="#d7e2ee" font-size="13">Drivers/</text>
+            <text x="42" y="202" fill="#5d6f85" font-size="10.5">OOP 芯片驱动：lcd · key · uart · aht21 · cst816 · mpu6050 等 12 个</text>
+          </g>
+          <g>
+            <rect x="20" y="224" width="560" height="56" rx="8" fill="#0f1622" stroke="#1f2b3d"/>
+            <text x="42" y="250" fill="#3ee6a4" font-size="14" font-weight="bold">L4</text>
+            <text x="76" y="250" fill="#d7e2ee" font-size="13">Server/</text>
+            <text x="42" y="270" fill="#5d6f85" font-size="10.5">可复用服务：at_parser 命令引擎 · page_manager 页面栈</text>
+          </g>
+          <g>
+            <rect x="20" y="292" width="560" height="56" rx="8" fill="#142030" stroke="#3ee6a4" stroke-opacity=".35"/>
+            <text x="42" y="318" fill="#3ee6a4" font-size="14" font-weight="bold">L5</text>
+            <text x="76" y="318" fill="#d7e2ee" font-size="13">App/</text>
+            <text x="42" y="338" fill="#5d6f85" font-size="10.5">Active Object + 业务：home_page · sensor_update · power_manager · ble_command</text>
+          </g>
+          <text x="20" y="392" fill="#5d6f85" font-size="11">Board 硬件描述文件 board/ov_watch_v2.h = 编译期静态数据 · 轻量版 Device Tree —— 换板子只改一个文件</text>
+        </g>
+      </svg>
+      </div></div>
+    </div>
+    <div class="prose reveal">
+      <ul>
+        <li><b>Board 硬件描述</b>：所有引脚 / 地址 / 参数（LED active_low、按键消抖时间、LCD 分辨率、3 条 I2C 总线的 SCL/SDA、传感器地址、看门狗引脚）集中在一个编译期静态文件里，轻量版 Device Tree。</li>
+        <li><b>组合根</b>（<code>App/device_registry.c</code>）：全系统唯一「创建对象 + 依赖注入」点。分三级挂载：DEVICE 级创建总线句柄 → COMPONENT 级创建全部芯片驱动 + 回调注入 + probe（ops-&gt;init 校验 ID，失败 Error_Handler 停启）→ READY 级开启外部看门狗。</li>
+        <li><b>依赖铁律</b>：上层只依赖下层，下层绝不 include 上层；换 MCU 只需重写 Platform 层。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> Active Object 并发框架 <span class="idx">concurrency/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>参考 QP/C 与 Linux workqueue 思想：<b>每个 Active Object = 一个 FreeRTOS 任务 + 私有消息队列（深度 16）+ dispatch 分发函数</b>。事件载荷 12 字节内联传值，<code>ao_post_event</code> 可在 ISR 中安全调用——跨上下文无指针生命周期问题。</p>
+    </div>
+    <div class="reveal" style="margin:14px 0">
+      <div class="term"><div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">ao_base.c · ISR → 队列 → 任务</span></div>
+      <div style="background:#0a0f18;padding:10px">
+      <svg viewBox="0 0 780 300" role="img" aria-label="Active Object 并发框架" style="width:100%;height:auto;display:block">
+        <defs>
+          <marker id="arw2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#3ee6a4"/>
+          </marker>
+        </defs>
+        <g font-family="Consolas, monospace">
+          <rect x="16" y="110" width="170" height="80" rx="10" fill="#0f1622" stroke="#ff6b6b" stroke-opacity=".6"/>
+          <text x="36" y="140" fill="#ff6b6b" font-size="13" font-weight="bold">ISR</text>
+          <text x="36" y="158" fill="#5d6f85" font-size="10.5">EXTI / TIM / UART</text>
+          <text x="36" y="176" fill="#5d6f85" font-size="10.5">只做限流 + 投递</text>
+
+          <rect x="290" y="30" width="210" height="240" rx="10" fill="#0f1622" stroke="#3ee6a4" stroke-opacity=".55"/>
+          <text x="310" y="60" fill="#3ee6a4" font-size="13" font-weight="bold">Active Object</text>
+          <text x="310" y="82" fill="#5d6f85" font-size="10.5">FreeRTOS 任务 ×1</text>
+          <text x="310" y="100" fill="#5d6f85" font-size="10.5">私有队列 depth=16</text>
+          <text x="310" y="118" fill="#5d6f85" font-size="10.5">12B 内联 payload</text>
+          <text x="310" y="136" fill="#5d6f85" font-size="10.5">dispatch 串行处理</text>
+          <text x="310" y="154" fill="#5d6f85" font-size="10.5">无事件 → 阻塞挂起</text>
+          <text x="310" y="186" fill="#3ee6a4" font-size="10.5">队列串行化</text>
+          <text x="310" y="202" fill="#3ee6a4" font-size="10.5">= 无锁并发</text>
+          <text x="310" y="222" fill="#5d6f85" font-size="10.5">实例：HomeAO /</text>
+          <text x="310" y="238" fill="#5d6f85" font-size="10.5">SensorAO / PowerAO</text>
+
+          <rect x="600" y="110" width="170" height="80" rx="10" fill="#0f1622" stroke="#56b6ff" stroke-opacity=".6"/>
+          <text x="620" y="140" fill="#56b6ff" font-size="13" font-weight="bold">业务回调</text>
+          <text x="620" y="158" fill="#5d6f85" font-size="10.5">AO dispatch 上下文</text>
+          <text x="620" y="176" fill="#5d6f85" font-size="10.5">改状态无需加锁</text>
+
+          <line x1="186" y1="150" x2="286" y2="150" stroke="#3ee6a4" stroke-width="1.6" marker-end="url(#arw2)"/>
+          <text x="196" y="140" fill="#3ee6a4" font-size="10.5">ao_post_event()</text>
+          <text x="196" y="128" fill="#5d6f85" font-size="10">ISR-safe</text>
+          <line x1="500" y1="150" x2="596" y2="150" stroke="#3ee6a4" stroke-width="1.6" marker-end="url(#arw2)"/>
+          <text x="506" y="140" fill="#5d6f85" font-size="10.5">事件分发</text>
+        </g>
+      </svg>
+      </div></div>
+    </div>
+    <div class="prose reveal">
+      <ul>
+        <li><b>两段式管线</b>：ISR 只做限流与投递（如按键 EXTI 里 tick 消抖 + 只投 key_id），业务判断全在任务上下文。</li>
+        <li><b>LVGL 线程安全</b>：LVGL 非线程安全，跨线程 UI 更新统一走 <code>lv_async_call</code>——HomeAO 的 dispatch 只存数据，回调在 LvglTask 上下文异步执行。</li>
+        <li><b>RTOS 抽象</b>（<code>Platform/os_if.c</code>）：队列 / 互斥 / 事件标志 / 任务 / 延时全部封装成项目自有接口，换 RTOS 只改一个文件。</li>
+        <li><b>统一错误码</b>：<code>error_t</code> enum（非 #define，调试器可见符号名）；「count-or-error」模式对齐 Linux 内核（正数=字节数、负数=错误码）。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> OOP-in-C 驱动体系与通讯协议 <span class="idx">drivers/</span></h2>
+    <div class="sec-line reveal"></div>
+
+    <h3 class="sub-title">七级自动初始化 <span class="idx">仿 Linux module_init / RT-Thread INIT_EXPORT</span></h3>
+    <div class="prose reveal">
+      <p>7 级：<code>BOARD→PREV→DEVICE→COMPONENT→ENV→APP→READY</code>，每级执行完才进下一级，同级按 order 排序。新增模块只新建 .c + 一行宏，<b>零侵入旧代码</b>（开闭原则）。</p>
+      <pre class="code reveal"><span class="c">/* 宏把初始化条目放进链接器段（ARMCC），.sct 收集，运行时按级遍历 */</span>
+<span class="k">#define</span> INIT_APP_EXPORT(fn)                                       __attribute__((section(<span class="s">"InitEntries"</span>)))                         <span class="k">const</span> init_entry_t _init_##fn = { fn, ORDER_APP }</pre>
+      <p>调用点在 <code>freertos.c</code> 的 CubeMX USER CODE 保留区（<code>osKernelInitialize</code> 之后、<code>osKernelStart</code> 之前，串行执行）——<b>CubeMX 重生成不丢</b>。运行时用 ARMCC 边界符号 <code>Image$$ER_INIT_TABLE$$Base/Limit</code> 遍历执行。</p>
+    </div>
+
+    <h3 class="sub-title">SPI + ST7789 显示屏 <span class="idx">软件 NSS + DMA 渲染管线</span></h3>
+    <div class="prose reveal">
+      <ul>
+        <li>CS 软件控制：传输前拉低、DMA 完成后由 SPI 空闲中断补拉高（硬件 NSS 在字节间隙会释放 CS，ST7789 需要整帧低）。</li>
+        <li>初始化序列<b>表驱动</b>：<code>st7789_init.h</code> 是厂商寄存器纯数据表，<code>lcd_send_init_sequence</code> 是通用发送器——<b>换 ILI9341 只换表</b>。</li>
+        <li>像素数据走 SPI DMA：<code>lcd_write → spi_transmit_dma → HAL_SPI_TxCpltCallback → lcd_notify_flush_done()</code> 回调 LVGL，CPU 传输期间不被占用。</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-title">UART：DMA 接收 + IDLE 中断帧检测 + 环形缓冲</h3>
+    <div class="prose reveal">
+      <ul>
+        <li><code>HAL_UARTEx_ReceiveToIdle_DMA</code>：DMA + 总线空闲中断结合，帧结束自动触发；ISR 里用 <code>RxXferSize - DMA 剩余计数器</code> 算帧长，写 volatile 变量——<b>ISR 不调任何 RTOS API</b>。</li>
+        <li>任务侧 <code>uart_read_frame</code> 消费：更新环形缓冲写指针（256B、2 的幂掩码取模）→ 置事件标志 → 阻塞等帧 → 读出。</li>
+        <li>承载两路业务：调试 AT 控制台 + BLE 模块（KT6328）透传通道。</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-title">软件 I2C 位带 <span class="idx">DWT 微秒延时</span></h3>
+    <div class="prose reveal">
+      <ul>
+        <li>SCL/SDA 用 GPIO 翻转实现完整时序：START/STOP/ACK 检测/8 位收发/Repeated START（寄存器访问「写地址后不 STOP 直接再 START 切读」）。</li>
+        <li><b>微秒延时用 DWT 周期计数器</b>而非 NOP 循环（NOP 依赖优化级别会漂移）或 SysTick（归 FreeRTOS 所有）——bug 复盘修出的正确实现。</li>
+        <li>ACK 无应答返回 <code>ERR_DRV_I2C_ACK</code>；3 条独立总线（传感器 / EEPROM / 触摸）。</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-title">BLE 通讯：KT6328 透传 + AT 命令引擎</h3>
+    <div class="prose reveal">
+      <ul>
+        <li>手机 App ↔ BLE ↔ UART 帧 ↔ MCU，AT 协议承载业务命令；<code>at_parser</code> 注册制命令引擎，命令表由 App 层注入（组合根），引擎只做路由。</li>
+        <li>OV 家族命令：<code>OV+VERSION</code>（版本号单一信息源 version.h）、<code>OV+SEND</code>（上报温湿度时间等 7 行数据，读无锁快照）、<code>OV+ST=</code> 校时——<b>三层防线</b>：逐位数字校验 → 范围校验 → 驱动返回值校验，外部输入永远不可信。</li>
+        <li>手写扫描切分命令名（不用 strtok/sscanf——不可重入 / 格式僵化）；未知命令显式报错，不静默吞掉。</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-title">传感器统一采样调度 <span class="idx">TIM 硬件节拍</span></h3>
+    <div class="prose reveal">
+      <p>TIM11 50ms 溢出中断 → <code>ao_post_event</code> 投递节拍（ISR 只投事件）→ SensorAO dispatch 串行执行：高频通道每 50ms 采 PPG 原始波形（20Hz 足够还原心率），低频通道按分频（先加后除防截断）采温湿度 / 姿态 / 罗盘 / 气压。结果写 <code>g_sensor_cache</code> 无锁快照（单写者），BLE 命令任务只读。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 低功耗设计 <span class="idx">power/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>按电源域从浅到深拆解三种低功耗模式，回答「谁还在供电 / 唤醒源 / 唤醒代价」三个问题：</p>
+    </div>
+    <div class="tbl-wrap reveal">
+      <table class="term-table">
+        <tr><th>模式</th><th>电源域</th><th>唤醒源</th><th>唤醒代价</th></tr>
+        <tr><td><b>SLEEP</b></td><td>仅 CPU 停，外设时钟全跑，SRAM/寄存器全保持</td><td>任意中断</td><td>0 cycle，直接继续执行</td></tr>
+        <tr><td><b>STOP</b></td><td>外设停、SRAM 保持、<b>RTC/备份域活</b></td><td>EXTI / RTC 唤醒定时器</td><td>~10μs，需重配系统时钟</td></tr>
+        <tr><td><b>STANDBY</b></td><td>仅备份域（RTC+备份寄存器），SRAM 清零</td><td>RTC / WKUP 引脚</td><td>冷启动（进 Reset_Handler）</td></tr>
+      </table>
+    </div>
+    <div class="prose reveal">
+      <p>六种<b>声明式功耗场景</b>（<code>power_model_t</code> 纯数据表）：背光百分比、传感器采样周期（0=全部 sleep）、BLE 模块电源开关、事件处理完后的入睡深度。</p>
+    </div>
+    <div class="tbl-wrap reveal">
+      <table class="term-table">
+        <tr><th>场景</th><th>背光</th><th>采样周期</th><th>BLE</th><th>入睡深度</th></tr>
+        <tr><td><b>ACTIVE</b></td><td>80%</td><td>50ms</td><td>开</td><td>RUN</td></tr>
+        <tr><td><b>DIM</b></td><td>10%</td><td>500ms</td><td>开</td><td>—</td></tr>
+        <tr><td><b>IDLE</b></td><td>关屏</td><td>传感器全睡</td><td>关</td><td>SLEEP</td></tr>
+        <tr><td><b>STOP</b></td><td>息屏</td><td>—</td><td>关</td><td>STOP（仅 RTC 活）</td></tr>
+        <tr><td><b>CHARGE</b></td><td>常亮</td><td>正常</td><td>开</td><td>不省电</td></tr>
+        <tr><td><b>SPORT</b></td><td>常亮</td><td>全速</td><td>开</td><td>—</td></tr>
+      </table>
+    </div>
+    <div class="prose reveal">
+      <p>超时迁移也是声明式表：ACTIVE 无操作 10s→DIM，30s→IDLE，60s→STOP；CHARGE/SPORT 无超时降级。</p>
+      <p><b>面向切面（AOP）的功耗引擎</b>（<code>App/power_manager_ao</code>，Linux cpuidle / RT-Thread pm 同款模式）：业务模块只发布事件（按键/触摸/充电/抬腕），<b>不写任何省电代码</b>；引擎按迁移规则表逐子系统 diff 执行过渡——LCD 0↔非0 走 open/close（面板 Sleep Out/In + PWM），非 0 之间走 ioctl 亮度；传感器采样周期经 SensorAO 命令队列修改（<b>队列即锁</b>）；BLE 模块直接断电（KT6328 电源脚 PA8）。</p>
+      <p>关键细节：STOP 前清 WU/SB 唤醒标志 + <code>HAL_SuspendTick()</code>（防 pending tick 唤醒、防唤醒后时钟未重配时 tick 错频）；入睡循环「排空队列遗留事件 → 入睡 → 唤醒 → 再排空」；外部看门狗用 OS_PRIO_LOW 最低优先级喂狗——业务全卡死时喂狗排不上队，狗超时复位（看门狗本意）。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> OTA：单槽双保险 IAP <span class="idx">ota/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>App 实测 ~392KB，512KB Flash 上做 A/B 双槽每槽仅 208KB <b>物理放不下</b>——所以选择「单槽 + 双保险」，这是硬件约束下的最优解。</p>
+    </div>
+    <div class="reveal" style="margin:14px 0">
+      <div class="term"><div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">flash.svg · 分区（单一信息源 shared/ota_protocol.h）</span></div>
+      <div style="background:#0a0f18;padding:10px">
+      <svg viewBox="0 0 780 150" role="img" aria-label="Flash 分区" style="width:100%;height:auto;display:block">
+        <g font-family="Consolas, monospace">
+          <text x="24" y="22" fill="#5d6f85" font-size="11">分区地址 / 魔数 单一信息源：shared/ota_protocol.h</text>
+          <rect x="24" y="36" width="116" height="64" rx="6" fill="#0f1622" stroke="#1f2b3d"/>
+          <text x="40" y="62" fill="#5d6f85" font-size="11">S0–S1</text>
+          <text x="40" y="80" fill="#d7e2ee" font-size="12">BootLoader</text>
+          <text x="40" y="94" fill="#5d6f85" font-size="10">32 KB</text>
+          <rect x="140" y="36" width="64" height="64" rx="6" fill="rgba(255,200,87,.09)" stroke="#ffc857" stroke-opacity=".6"/>
+          <text x="154" y="62" fill="#ffc857" font-size="11">S2</text>
+          <text x="154" y="80" fill="#d7e2ee" font-size="12">FLAG</text>
+          <text x="154" y="94" fill="#5d6f85" font-size="10">16 KB</text>
+          <rect x="204" y="36" width="552" height="64" rx="6" fill="rgba(86,182,255,.07)" stroke="#56b6ff" stroke-opacity=".5"/>
+          <text x="220" y="62" fill="#56b6ff" font-size="11">S3–S7</text>
+          <text x="220" y="80" fill="#d7e2ee" font-size="12">App（实测 ~392KB，余量充足）</text>
+          <text x="220" y="94" fill="#5d6f85" font-size="10">464 KB</text>
+          <text x="24" y="124" fill="#5d6f85" font-size="10.5">0x08000000</text>
+          <text x="140" y="124" fill="#5d6f85" font-size="10.5">0x08008000</text>
+          <text x="204" y="124" fill="#5d6f85" font-size="10.5">0x0800C000</text>
+          <text x="722" y="124" fill="#5d6f85" font-size="10.5">0x08080000</text>
+        </g>
+      </svg>
+      </div></div>
+    </div>
+    <div class="prose reveal">
+      <h3>双保险掉电安全</h3>
+      <ol>
+        <li><b>保险一（先作废再写入）</b>：升级第一步擦 S2 清 FLAG 作废旧固件——升级中途掉电，上电后 BootLoader 看到无有效标记，停在升级模式等重传，<b>绝不跳半成品</b>。不变量：「FLAG 存在 ⟺ 固件完整」，靠时序维持。</li>
+        <li><b>保险二（整包校验）</b>：Ymodem 收完固件后对 Flash 完整镜像算软件 CRC-32（查表法 20 行，自检向量 "123456789"→0xCBF43926），与 footer 8 字节（<code>[CRC32 LE][长度 LE]</code>，pack_ota.py 打包脚本追加，与 Python zlib.crc32 同参数）比对，<b>通过才写回 FLAG</b>。</li>
+        <li><b>跳转前向量表合法性校验</b>：读 App 向量表头两个 word——SP 必须在 RAM 区间、PC 必须在 App 区，不信任「看起来像有效」的 FLAG。</li>
+      </ol>
+      <pre class="code reveal"><span class="c">/* 跳转前校验：不信任"看起来有效"的标记 */</span>
+uint32_t sp = *(<span class="k">volatile</span> uint32_t *)APP_BASE;
+uint32_t pc = *(<span class="k">volatile</span> uint32_t *)(APP_BASE + <span class="n">4</span>);
+<span class="k">if</span> (sp &lt; RAM_BASE || sp &gt; RAM_END) <span class="k">return</span> ERR_BAD_SP;
+<span class="k">if</span> (pc &lt; APP_BASE || pc &gt; APP_BASE + APP_MAX) <span class="k">return</span> ERR_BAD_PC;</pre>
+      <h3>BootLoader → App 六步跳转（寄存器级）</h3>
+      <p>① <code>__disable_irq()</code> 关全局中断 → ② <code>HAL_RCC_DeInit()+HAL_DeInit()</code> 复位外设到上电默认 → ③ SysTick 三个寄存器清零 → ④ <code>SCB-&gt;VTOR = 0x0800C000</code> 重定位向量表 → ⑤ 读 App 向量表 [0]=MSP、[4]=Reset_Handler → ⑥ <code>__set_MSP()</code> + 跳转。顺序不能乱（先 VTOR 再跳，否则第一条指令前中断进错表）。</p>
+      <h3>升级触发（两条路径）与 Ymodem</h3>
+      <ul>
+        <li>开发 / 救砖：按住 KEY1 上电（500ms 防抖二次确认）；<b>量产路径（BLE）</b>：手机发 <code>OV+OTA</code> → App 往 <b>RTC 备份寄存器写魔数</b>（0x4F54414F）→ <code>NVIC_SystemReset()</code> → BootLoader 检测到魔数进升级模式并清魔数。选备份寄存器而非 Flash 标志：写 Flash 要擦扇区、阻塞取指上百毫秒且冻结喂狗任务，备份寄存器是纯寄存器写、微秒级、VBAT 掉电不丢。</li>
+        <li>Ymodem：STX 1024B 大帧 / SOH 128B 小帧，帧头（序号+~序号）+ CRC16；接收状态机「发 'C' 进 CRC 模式 → 收文件名包（解析声明大小，超限拒绝）→ 擦 App 区 → 逐帧收数据写 Flash（每帧 CRC16 + 序号校验，错误 NAK 重传，10 次超限取消）」；<b>修复原版 ST 例程的坑</b>：末帧不足 1024B 按声明大小截断、不把 0x1A 填充写进 Flash；尾部不足 4 字节补 0xFF 凑整字。</li>
+        <li>看门狗协作：进升级模式开外狗 + Ymodem 等待/接收循环喂狗 + 擦扇区循环喂狗（擦 Flash 期间取指暂停，5 个扇区 ~1s 必须分段喂）+ 跳转前关狗——升级挂死自动复位重进升级模式。</li>
+        <li>工具链：BootLoader 与 App 各一份手写 .sct（App 偏移 0x0800C000 且<b>保留七级初始化的 ER_INIT_TABLE 段</b>，Keil 自动生成会丢手写段）；After Build 跑 pack_ota.py 打包。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 总结：本工程展示的嵌入式能力 <span class="idx">summary/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="tbl-wrap reveal">
+      <table class="term-table">
+        <tr><th>能力维度</th><th>本工程的落地</th></tr>
+        <tr><td><b>架构设计</b></td><td>五层单向依赖 · 组合根（唯一 new 点）· 依赖注入（DIP）· Board 描述文件（轻量 Device Tree）</td></tr>
+        <tr><td><b>并发模型</b></td><td>Active Object 无锁框架 · ISR 两段式管线 · 事件内联传值 · LVGL 跨线程安全</td></tr>
+        <tr><td><b>驱动开发</b></td><td>OOP-in-C（不透明句柄 + ops 虚表）· 表驱动初始化 · SPI/UART DMA · 软件 I2C（DWT 时序）</td></tr>
+        <tr><td><b>健壮性</b></td><td>外部看门狗 · 统一 error_t 错误码 · count-or-error · 三层防线校时 · 未知命令显式报错</td></tr>
+        <tr><td><b>低功耗</b></td><td>三种电源域分析 · 六场景声明式模型 · AOP 功耗引擎 · diff 过渡 · HAL_SuspendTick 细节</td></tr>
+        <tr><td><b>系统升级</b></td><td>单槽双保险 IAP · 先作废再写入 · 整包 CRC-32 · 向量表校验 · Ymodem · BLE 触发</td></tr>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<div class="pager reveal">
+  <a href="../index.html"><div class="dir">← prev</div><div class="name">~/home · 返回首页</div></a>
+  <a class="next" href="cane-terminal.html"><div class="dir">next →</div><div class="name">~/projects/cane-terminal</div></a>
+</div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="term">
+      <div class="term-body">
+        <div class="line"><span class="ok">$</span> ./build.sh --target=wrist-talk <span class="info">→</span> done</div>
+        <div class="line dim">© <span id="year">2026</span> Orlando Hsu · Embedded Software Engineer</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="copy">~/hsu — STM32 / FreeRTOS / LVGL</div>
+      <div class="copy"><a href="#top">back to top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js?v=4"></script>
+</body>
+</html>

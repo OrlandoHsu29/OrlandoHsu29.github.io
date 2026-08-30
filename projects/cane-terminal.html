@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cane 适老化 AI 辅助终端 · 许博耀</title>
+<meta name="description" content="Cane：面向老年人的语音主交互 AI 终端 —— ESP32 + BLE + OpenClaw 硬件原型">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../assets/css/main.css?v=4">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<a class="back-btn" href="../index.html#projects" title="返回项目列表" aria-label="返回项目列表">←</a>
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="../index.html"><span class="tilde">~</span>/hsu<span class="cursor">_</span></a>
+    <div class="nav-proj"><a href="../index.html#projects">~/projects</a>/<span class="accent">cane-terminal</span></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换浅色/深色模式" title="切换主题">
+  <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">~</a>/projects/<span class="here">cane-terminal</span></div>
+    <h1>Cane <span class="thin">适老化 AI 辅助终端</span></h1>
+    <p class="lead">
+      针对「老年人用手机难」的个人创客项目：用<b>语音主交互 + 按键辅助交互</b>代替触控交互，在用户与手机之间加一层
+      「中间层 AI」——终端通过 BLE 调起手机上的 Agent 自主操作 App。目标是让只会说方言的老年人，
+      也能直接用一句话完成拨电话、发微信、查信息。
+    </p>
+    <div class="tags">
+      <span class="tag grn">ESP32</span><span class="tag grn">BLE</span><span class="tag">OpenClaw</span>
+      <span class="tag">方言 ASR</span><span class="tag alt">产品设计</span><span class="tag alt">硬件原型</span>
+    </div>
+    <div class="meta-row">
+      <span>硬件 <b>ESP32 原型</b></span>
+      <span>通信 <b>BLE 透传</b></span>
+      <span>状态 <b>原型已跑通 · 规划 STM32 重启</b></span>
+      <span>时间 <b>2025.10 – 至今</b></span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 项目理念 <span class="idx">idea/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>老年用户最大的门槛不是「不会用某个 App」，而是<b>触控交互本身</b>：找入口、点对位置、理解层级菜单。
+        市面上的 AI 手机（豆包等）和开源方案（OpenClaw 手机版）已经能做到「AI 操作手机」，本质是加一层
+        ASR + Agent 中间层。Cane 的差异化在于<b>适老化与按键辅助</b>：</p>
+      <ul>
+        <li>终端保留<b>最核心的录音键</b>：按住说话，ASR 识别需求交给 AI；</li>
+        <li>屏幕<b>用 AI 整合手机上的信息，重绘成简单直观的 UI</b>（一页一个 App 图标，左右翻页），而不是把手机屏幕镜像给老人看；</li>
+        <li>按键只保留<b>方向键 + 确认键</b>——为用户做选择，才能简化逻辑；</li>
+        <li>融合<b>自训方言 ASR</b>（潮汕话），让不会说普通话的老人也能直接控制 AI。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 技术链路 <span class="idx">link/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>终端通过蓝牙调起手机上的功能：在终端识别语音指令，或发送控制指令；手机端由 OpenClaw 把指令转化为控制脚本，从而操控手机完成目标需求。</p>
+    </div>
+    <div class="reveal" style="margin:14px 0">
+      <div class="term"><div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">cane-link.svg · 终端 → 手机 Agent</span></div>
+      <div style="background:#0a0f18;padding:10px">
+      <svg viewBox="0 0 780 230" role="img" aria-label="Cane 技术链路" style="width:100%;height:auto;display:block">
+        <defs>
+          <marker id="arw3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#3ee6a4"/>
+          </marker>
+        </defs>
+        <g font-family="Consolas, monospace">
+          <rect x="20" y="80" width="200" height="110" rx="10" fill="#0f1622" stroke="#3ee6a4" stroke-opacity=".55"/>
+          <text x="40" y="108" fill="#3ee6a4" font-size="13" font-weight="bold">Cane 终端</text>
+          <text x="40" y="128" fill="#5d6f85" font-size="10.5">ESP32 · 录音键</text>
+          <text x="40" y="144" fill="#5d6f85" font-size="10.5">按键交互 + 精简 GUI</text>
+          <text x="40" y="160" fill="#5d6f85" font-size="10.5">（可选：终端侧 ASR）</text>
+
+          <rect x="320" y="80" width="200" height="110" rx="10" fill="#0f1622" stroke="#56b6ff" stroke-opacity=".6"/>
+          <text x="340" y="108" fill="#56b6ff" font-size="13" font-weight="bold">手机端 OpenClaw</text>
+          <text x="340" y="128" fill="#5d6f85" font-size="10.5">ASR + Agent</text>
+          <text x="340" y="144" fill="#5d6f85" font-size="10.5">语音指令 → 控制脚本</text>
+          <text x="340" y="160" fill="#5d6f85" font-size="10.5">融合自训方言 ASR</text>
+
+          <rect x="600" y="80" width="160" height="110" rx="10" fill="#0f1622" stroke="#ffc857" stroke-opacity=".55"/>
+          <text x="620" y="108" fill="#ffc857" font-size="13" font-weight="bold">手机 App</text>
+          <text x="620" y="128" fill="#5d6f85" font-size="10.5">拨电话 / 发微信</text>
+          <text x="620" y="144" fill="#5d6f85" font-size="10.5">查询信息</text>
+          <text x="620" y="160" fill="#5d6f85" font-size="10.5">结果回传终端重绘</text>
+
+          <line x1="220" y1="135" x2="316" y2="135" stroke="#3ee6a4" stroke-width="1.6" marker-end="url(#arw3)"/>
+          <text x="232" y="125" fill="#3ee6a4" font-size="10.5">BLE</text>
+          <line x1="520" y1="135" x2="596" y2="135" stroke="#3ee6a4" stroke-width="1.6" marker-end="url(#arw3)"/>
+          <text x="532" y="125" fill="#5d6f85" font-size="10.5">控制脚本</text>
+          <line x1="680" y1="80" x2="680" y2="56" stroke="#5d6f85" stroke-width="1.4" marker-end="url(#arw3)" stroke-dasharray="3 3"/>
+          <text x="608" y="46" fill="#5d6f85" font-size="10.5">信息整合重绘 → 终端屏幕</text>
+        </g>
+      </svg>
+      </div></div>
+    </div>
+    <div class="prose reveal">
+      <p>方言 ASR 底座来自我的开源项目 <a href="teo-estuary.html">Teo-Estuary 潮汕话语料平台</a>——先积累语料、训练方言 ASR，再融合进 Cane 的语音链路。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 当前进展 <span class="idx">status/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>已完成一个基于 <b>ESP32 的 demo</b>：通过 BLE 调起手机 MeowHub开源软件（基于OpenClaw开发的APP） 的语音转文字功能，打通「终端 → 语音转文字指令 → 蓝牙 → 手机 Agent → 自动化操作」链路。</p>
+      <div class="callout reveal"><span class="t">暂停与重构</span>这套 ESP32 + OpenClaw 的技术栈与企业嵌入式开发的主流技术栈契合度不高，且原 ESP32 硬件无法满足产品设计要求——因此暂停迭代，转向 <b>STM32 技术栈的智能腕表系统（Wrist-Talk）</b>，优先以企业常用技术栈系统验证并掌握成熟方案，后续结合硬件设计能力重启本产品。</div>
+      <h3>重启规划</h3>
+      <ul>
+        <li>以 <b>STM32 作为 MCU</b> 重新设计硬件（企业主流技术栈）；或考虑 Linux 应用开发方案；</li>
+        <li>终端侧集成自训<b>方言 ASR</b>（与 Teo-Estuary 打通）；</li>
+        <li>屏幕信息由 AI 按老年人认知重绘，按键只保留方向键 + 确认键 + 录音键。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="pager reveal">
+  <a href="wrist-talk.html"><div class="dir">← prev</div><div class="name">~/projects/wrist-talk</div></a>
+  <a class="next" href="teo-estuary.html"><div class="dir">next →</div><div class="name">~/projects/teo-estuary</div></a>
+</div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="term">
+      <div class="term-body">
+        <div class="line"><span class="ok">$</span> ./build.sh --target=cane-terminal <span class="info">→</span> done</div>
+        <div class="line dim">© <span id="year">2026</span> Orlando Hsu · Embedded Software Engineer</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="copy">~/hsu — ESP32 / BLE / Agent</div>
+      <div class="copy"><a href="#top">back to top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js?v=4"></script>
+</body>
+</html>

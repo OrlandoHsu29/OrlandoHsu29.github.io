@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>锂电池自动化PACK生产线（含自研柔性焊接系统） · 许博耀</title>
+<meta name="description" content="锂电池自动化PACK生产线：项目负责人 —— 焊接模块、贴纸模块结构设计、产线整合（BOM 与 PLC 控制）">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../assets/css/main.css?v=4">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<a class="back-btn" href="../index.html#projects" title="返回项目列表" aria-label="返回项目列表">←</a>
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="../index.html"><span class="tilde">~</span>/hsu<span class="cursor">_</span></a>
+    <div class="nav-proj"><a href="../index.html#projects">~/projects</a>/<span class="accent">pack-line</span></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换浅色/深色模式" title="切换主题">
+  <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">~</a>/projects/<span class="here">pack-line</span></div>
+    <h1>锂电池自动化PACK生产线 <span class="thin">含自研柔性焊接系统</span></h1>
+    <p class="lead">
+      面向圆柱形锂电池包定制化生产需求，构建包含<b>分选、绝缘（贴纸）、组装、焊接、码垛</b>的全流程自动化系统。
+      担任<b>项目负责人</b>，工作覆盖三条线：<b>焊接模块开发</b>（工业视觉 + 运动控制）、
+      <b>贴纸模块结构设计</b>（机械设计）与<b>产线整合</b>（BOM 整理 + PLC 控制）。
+    </p>
+    <div class="tags">
+      <span class="tag grn">项目负责人</span><span class="tag grn">OpenCV</span><span class="tag grn">PLC</span>
+      <span class="tag">三轴运动控制</span><span class="tag">Fusion 360</span><span class="tag">钣金 / 铝型材</span>
+      <span class="tag alt">Unity 数字孪生</span><span class="tag alt">iCAN 全国三等奖</span>
+    </div>
+    <div class="meta-row">
+      <span>时间 <b>2024.01 – 2025.01</b></span>
+      <span>角色 <b>项目负责人 · 工业视觉 / 机械设计 / PLC 控制</b></span>
+      <span>技术栈 <b>OpenCV + PLC + Fusion 360</b></span>
+    </div>
+    <div class="stat-strip">
+      <div class="stat"><div class="num">98.5<small>%</small></div><div class="lbl">焊接识别成功率（56% → 98.5%）</div></div>
+      <div class="stat"><div class="num">5<small> 模块</small></div><div class="lbl">分选 / 绝缘 / 组装 / 焊接 / 码垛</div></div>
+      <div class="stat"><div class="num">1<small> 项</small></div><div class="lbl">随动焊接预研（边运输边焊接）</div></div>
+      <div class="stat"><div class="num">全国<small> 三等奖</small></div><div class="lbl">iCAN 创新创业大赛</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ==================== 奖项（开头） ==================== -->
+  <section class="sec" style="padding-top:28px">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 奖项 <span class="idx">awards/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>项目获 <b>iCAN 大学生创新创业大赛 全国三等奖</b>（证书见首页「奖项与认证」），
+        另获 <b>CIMC 中国智能制造挑战赛</b>相关奖项。焊接模块的「视觉识别 → 轨迹规划 → 控制指令下发 → 运动执行」
+        链路，与嵌入式系统在工业现场的落地形态高度一致。</p>
+    </div>
+  </section>
+
+  <!-- ==================== 工作内容 ==================== -->
+  <section class="sec" style="padding-top:6px">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 工作内容 <span class="idx">content/</span></h2>
+    <div class="sec-line reveal"></div>
+    <p class="mod-nav-intro reveal">本项目负责 3 个模块：</p>
+  </section>
+
+  <!-- ==================== 模块导航（第二行，滚动吸顶） ==================== -->
+  <nav class="mod-scroll reveal" id="mod-scroll" aria-label="模块导航">
+    <a href="#mod-1" class="active"><span class="mno">1.</span>焊接模块开发</a>
+    <a href="#mod-2"><span class="mno">2.</span>贴纸模块结构设计</a>
+    <a href="#mod-3"><span class="mno">3.</span>产线整合 · BOM 与 PLC</a>
+  </nav>
+
+  <!-- ==================== 模块一：焊接模块开发 ==================== -->
+  <section class="module" id="mod-1">
+    <header class="mod-head reveal">
+      <h2>1. 焊接模块开发 <span class="thin">· 负责人</span></h2>
+    </header>
+    <div class="pline">
+  
+  <svg viewBox="0 0 960 118" role="img" aria-label="产线流程图：高亮焊接工位">
+    <defs><marker id="pmark1" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2a3a52"/></marker></defs>
+    
+        <rect x="10" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="60" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">分选</text>
+        <rect x="220" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="270" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">绝缘·贴纸</text>
+        <rect x="430" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="480" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">组装</text>
+        <rect x="640" y="26" width="100" height="46" rx="7" fill="rgba(62,230,164,.12)" stroke="#3ee6a4" stroke-width="1.8"/>
+        <text x="690" y="53" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3ee6a4" font-family="Consolas, monospace">焊接</text>
+        <rect x="850" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="900" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">码垛</text>
+    <line x1="110" y1="49" x2="218" y2="49" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark1)"/>
+    <line x1="320" y1="49" x2="428" y2="49" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark1)"/>
+    <line x1="530" y1="49" x2="638" y2="49" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark1)"/>
+    <line x1="740" y1="49" x2="848" y2="49" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark1)"/>
+
+  </svg>
+</div>
+    <h3 class="sub-title">项目背景 <span class="idx">background/</span></h3>
+    <div class="prose reveal">
+      <p>产线焊接环节原焊接机只能焊接<b>固定规格</b>的锂电池组，无法满足定制化生产需求。
+        因此自研三轴锂电组焊接机 + 视觉定位系统，实现柔性化自动焊接：传送带把电池组送到摄像头下方 →
+        拍照识别焊点位置 → 驱动焊接头移动到焊点 → 下降 Z 轴点焊 → 传送带运行、传来下一组。
+        接手时该环节还是 demo（MATLAB 通用视觉算法 + G 代码控制 Mach3），历时约一年完成成熟方案重构（OpenCV 工业视觉 + PLC 控制 + Unity 数字孪生）。</p>
+    </div>
+    <h3 class="sub-title">柔性焊接视觉开发 <span class="idx">vision/</span></h3>
+    <div class="prose reveal">
+      <ol>
+        <li>基于 <b>OpenCV</b> 搭建柔性焊接视觉识别流程：图像预处理 → <b>霍夫圆变换</b>识别定位焊接点 →
+            <b>S 型路径排序</b>焊接坐标 → 坐标变换 → 格式化指令并下发到 <b>PLC</b> 驱动步进电机，打通柔性焊接控制闭环；</li>
+        <li>结合<b>焊接机与传送带运动参数</b>建立数学模型预测焊接点位，在电池组输送过程中<b>跟随焊接</b>，减少停机时间、提高产能。</li>
+      </ol>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/weld-vision-flow.jpg" alt="视觉识别流程" loading="lazy"><figcaption>视觉识别流程</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/weld-control-flow.jpg" alt="设备控制流程" loading="lazy"><figcaption>设备控制流程（视觉 → 指令 → 运动）</figcaption></figure>
+    </div>
+    <h3 class="sub-title">数字化与品质追溯 <span class="idx">digital/</span></h3>
+    <div class="prose reveal">
+      <ol>
+        <li>搭建 <b>Unity 数字孪生</b>平台并打通 PLC 通讯，实现设备运行状况实时映射与<b>撞机告警</b>；</li>
+        <li>采集不同焊接质量的电池组图像进行<b>图像标注并训练图像分类模型</b>，判定焊接质量优劣，辅助良率判定与异常处理（ModelArts）。</li>
+      </ol>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot wide"><img src="../assets/img/weld-machine-render.jpg" alt="焊接机模型渲染图" loading="lazy"><figcaption>自研三轴焊接机模型渲染图</figcaption></figure>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/weld-machine-build.jpg" alt="焊接机实物搭建过程" loading="lazy"><figcaption>焊接机实物搭建过程</figcaption></figure>
+    </div>
+    <figure class="shot nozoom reveal">
+      <video controls preload="none" poster="../assets/img/weld-machine-render.jpg">
+        <source src="../assets/img/weld-follow-demo.mp4" type="video/mp4">
+        你的浏览器不支持 video 标签。
+      </video>
+      <figcaption>随动焊接功能演示</figcaption>
+    </figure>
+  </section>
+
+  <!-- ==================== 模块二：贴纸模块结构设计 ==================== -->
+  <section class="module" id="mod-2">
+    <header class="mod-head reveal">
+      <h2>2. 贴纸模块结构设计 <span class="thin">· 机械设计</span></h2>
+    </header>
+    <div class="pline">
+  
+  <svg viewBox="0 0 960 118" role="img" aria-label="产线流程图：高亮绝缘贴纸工位">
+    <defs><marker id="pmark2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2a3a52"/></marker></defs>
+    
+        <rect x="10" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="60" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">分选</text>
+        <rect x="220" y="26" width="100" height="46" rx="7" fill="rgba(62,230,164,.12)" stroke="#3ee6a4" stroke-width="1.8"/>
+        <text x="270" y="53" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3ee6a4" font-family="Consolas, monospace">绝缘·贴纸</text>
+        <rect x="430" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="480" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">组装</text>
+        <rect x="640" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="690" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">焊接</text>
+        <rect x="850" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="900" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">码垛</text>
+    <line x1="110" y1="49" x2="218" y2="49" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark2)"/>
+    <line x1="320" y1="49" x2="428" y2="49" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark2)"/>
+    <line x1="530" y1="49" x2="638" y2="49" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark2)"/>
+    <line x1="740" y1="49" x2="848" y2="49" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark2)"/>
+
+  </svg>
+</div>
+    <h3 class="sub-title">① 电池移料机构设计 <span class="idx">mechanism/</span></h3>
+    <div class="prose reveal">
+      <p>调研市面上现有的圆柱形锂电池移料机构，通过 <b>Fusion 360</b> 重新设计建模：
+        将非标件替换为标准件以降低成本，并调整参考机构的结构以适配产线需求。</p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/pack-pneumatic-transfer-1.jpg" alt="气动移料机构设计 1" loading="lazy"><figcaption>气动移料机构设计 1</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-pneumatic-transfer-2.jpg" alt="气动移料机构设计 2" loading="lazy"><figcaption>气动移料机构设计 2</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-pusher-slide.jpg" alt="贴纸模块推杆滑台建模" loading="lazy"><figcaption>贴纸模块 · 推杆滑台建模</figcaption></figure>
+    </div>
+    <h3 class="sub-title">② 机架与钣金结构设计 <span class="idx">structure/</span></h3>
+    <div class="prose reveal">
+      <p>完成贴青稞纸机构机架的建模与结构设计：<b>钣金设计</b>与<b>铝型材框架</b>搭建，
+        并完成末端执行机构与控制设备的机械连接与固定，确保整体机械系统的稳定性与装配精度。</p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/pack-electrical-cabinet-1.jpg" alt="电气柜设计 1" loading="lazy"><figcaption>电气柜设计 1</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-electrical-cabinet-2.jpg" alt="电气柜设计 2" loading="lazy"><figcaption>电气柜设计 2</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-sheet-metal-1.jpg" alt="钣金设计 1" loading="lazy"><figcaption>钣金设计 1</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-sheet-metal-2.jpg" alt="钣金设计 2" loading="lazy"><figcaption>钣金设计 2</figcaption></figure>
+    </div>
+    <h3 class="sub-title">实物展示 <span class="idx">result/</span></h3>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/pack-module-final.jpg" alt="贴纸模块最终实物" loading="lazy"><figcaption>贴纸模块最终实物</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ==================== 模块三：产线整合 · BOM 与 PLC 控制 ==================== -->
+  <section class="module" id="mod-3">
+    <header class="mod-head reveal">
+      <h2>3. 产线整合 <span class="thin">· BOM 与 PLC 控制</span></h2>
+    </header>
+    <div class="pline">
+  
+  <svg viewBox="0 0 960 150" role="img" aria-label="产线流程图：PLC 控制与工业组网覆盖整线">
+    <defs><marker id="pmark3" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2a3a52"/></marker></defs>
+    <rect x="10" y="8" width="940" height="26" rx="7" fill="rgba(62,230,164,.12)" stroke="#3ee6a4" stroke-width="1.6"/>
+    <text x="480" y="26" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3ee6a4" font-family="Consolas, monospace">本模块 · PLC 控制架构 · 工业组网 · BOM</text>
+    <line x1="60" y1="34" x2="60" y2="58" stroke="#3ee6a4" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <line x1="270" y1="34" x2="270" y2="58" stroke="#3ee6a4" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <line x1="480" y1="34" x2="480" y2="58" stroke="#3ee6a4" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <line x1="690" y1="34" x2="690" y2="58" stroke="#3ee6a4" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <line x1="900" y1="34" x2="900" y2="58" stroke="#3ee6a4" stroke-width="1.2" stroke-dasharray="4 3"/>
+    
+        <rect x="10" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="60" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">分选</text>
+        <rect x="220" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="270" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">绝缘·贴纸</text>
+        <rect x="430" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="480" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">组装</text>
+        <rect x="640" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="690" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">焊接</text>
+        <rect x="850" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
+        <text x="900" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">码垛</text>
+    <line x1="110" y1="81" x2="218" y2="81" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark3)"/>
+    <line x1="320" y1="81" x2="428" y2="81" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark3)"/>
+    <line x1="530" y1="81" x2="638" y2="81" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark3)"/>
+    <line x1="740" y1="81" x2="848" y2="81" stroke="#2a3a52" stroke-width="1.5" marker-end="url(#pmark3)"/>
+
+  </svg>
+</div>
+    <h3 class="sub-title">BOM 整理 <span class="idx">bom/</span></h3>
+    <div class="prose reveal">
+      <p>对接产线各模块，确定<b>电气设备、架构铝材</b>的选型与数量，整理形成 <b>BOM 表</b>，
+        输出标准化清单，支撑采购与装配。</p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/pack-bom.jpg" alt="贴纸机构 BOM 表" loading="lazy"><figcaption>BOM 表（贴纸机构示例）</figcaption></figure>
+    </div>
+    <h3 class="sub-title">PLC 控制架构与工业组网 <span class="idx">plc/</span></h3>
+    <div class="prose reveal">
+      <p>负责生产线的<b>设备统计与整合</b>：对接各模块控制需求，确定 PLC、触摸屏、交换机等电气设备的数量与选型，
+        设计 <b>PLC 控制架构</b>，制定工业组网及硬件部署方案，推动产线顺利落地。</p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/pack-arch-overview.jpg" alt="产线整体硬件架构图" loading="lazy"><figcaption>产线整体硬件架构图</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-electrical-flow.jpg" alt="贴纸模块电气流程图" loading="lazy"><figcaption>贴纸模块 · 电气流程设计</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-plc-topology.jpg" alt="虎鲸PLC网络拓扑图" loading="lazy"><figcaption>PLC 网络拓扑图</figcaption></figure>
+    </div>
+  </section>
+
+  <div class="pager reveal">
+    <a href="wafer-inspection.html"><div class="dir">← prev</div><div class="name">~/projects/wafer-inspection</div></a>
+    <a class="next" href="machine-tool.html"><div class="dir">next →</div><div class="name">~/projects/machine-tool</div></a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="term">
+      <div class="term-body">
+        <div class="line"><span class="ok">$</span> ./build.sh --target=pack-line <span class="info">→</span> done</div>
+        <div class="line dim">© <span id="year">2026</span> Orlando Hsu · Embedded Software Engineer</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="copy">~/hsu — OpenCV / PLC / Fusion 360</div>
+      <div class="copy"><a href="#top">back to top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js?v=4"></script>
+</body>
+</html>

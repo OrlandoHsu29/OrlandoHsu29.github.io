@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>许博耀 · Orlando Hsu</title>
+<meta name="description" content="许博耀（Orlando Hsu）· 项目作品集">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="assets/css/main.css?v=4">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- ======================= NAV ======================= -->
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="index.html"><span class="tilde">~</span>/hsu<span class="cursor">_</span></a>
+    <nav class="links">
+      <a href="#about" class="active">~/home</a>
+      <a href="#projects">~/projects</a>
+      <a href="#experience">~/experience</a>
+      <a href="#awards">~/awards</a>
+      <a href="#skills">~/skills</a>
+      <a href="#contact">~/contact</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换浅色/深色模式" title="切换主题">
+  <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</button>
+    <button class="nav-burger" aria-label="menu">☰</button>
+  </div>
+</header>
+
+<!-- ======================= HERO ======================= -->
+<section class="hero">
+  <div class="container">
+    <div class="intro-line">$ whoami · 技术爱好者 · STM32 / FreeRTOS / OpenCV / Python / PLC / Structural Design </div>
+    <img class="avatar" src="assets/img/head.jpg" alt="许博耀 Orlando Hsu">
+    <h1><span class="grad">Orlando Hsu</span> <span class="thin">· 许博耀</span></h1>
+    <div class="cta">
+      <a class="btn" href="#projects">查看项目 <span class="arr">→</span></a>
+      <a class="btn ghost" href="#skills">技术栈</a>
+      <a class="btn ghost" href="assets/resume/resume.pdf" download>下载简历 <span class="arr">↓</span></a>
+      <a class="btn ghost" href="https://github.com/OrlandoHsu29" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+
+    <div class="term boot">
+      <div class="term-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="title">hsu@dev: ~/portfolio</span>
+      </div>
+      <div class="term-body">
+        <div class="line boot-line">$ ./init --target=embedded-software-engineer</div>
+        <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">MCU</span>      STM32F411CEU6 (Cortex-M4F @100MHz) · ESP32</div>
+        <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">RTOS</span>     FreeRTOS · CMSIS-RTOS2 · Active Object</div>
+        <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">UI</span>       LVGL · SPI-DMA 渲染管线</div>
+        <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">Periph</span>   UART-DMA/IDLE · 软件 I2C · SPI · BLE · Ymodem OTA</div>
+        <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">Vision</span>   OpenCV · 霍夫变换 · 模板匹配 · 缺陷检测 · 轨迹规划</div>
+        <div class="line boot-line"><span class="ok">[ OK ]</span> <span class="dim">AI</span>       Dify Agent · RAG · ASR (FunASR) · 模型微调</div>
+        <div class="line boot-line"><span class="info">user</span>   = 许博耀 · Orlando Hsu · Embedded Software Engineer</div>
+        <div class="line boot-line"><span class="warn">status</span> 欢迎交流 → <span class="info">github.com/OrlandoHsu29</span> <span class="boot-cursor cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ABOUT ======================= -->
+<section class="sec" id="about">
+  <div class="container">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 自述 <span class="idx">about/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>
+        我的工程开发能力较为全面，
+        项目经历覆盖 STM32 固件开发、工业视觉、结构设计与 AI 应用开发等，主线聚焦嵌入式软件工程。
+      </p>
+      <p>
+        能熟练使用 <b>Claude Code、Git</b> 等工具，熟练使用 <b>Python、嵌入式 C 语言</b>，有较好的编程风格，
+        遵守代码规范。我也经常关注各种新技术的资讯，了解 AI 动向，保持对新技术的好奇，对新技术的应用场景有一定敏感性。
+      </p>
+      <p>
+        在参与不同项目的开发过程中，我对不同领域的技术架构都具备一定认知，并且学习能力较强、上手快，
+        因此能快速掌握新的技术栈与开发规范；面对复杂问题也能进行系统性思考，并积极结合调研来提出有效解决方案。
+      </p>
+    </div>
+
+    <div class="stat-strip reveal">
+      <div class="stat"><div class="num">07<small> 个</small></div><div class="lbl">项目（涵盖嵌软、工业自动化等）</div></div>
+      <div class="stat"><div class="num">3<small> 类</small></div><div class="lbl">硬件平台：STM32 / ESP32 / PLC</div></div>
+      <div class="stat"><div class="num">01<small> 个</small></div><div class="lbl">开源项目：Teo-Estuary 语料平台</div></div>
+      <div class="stat"><div class="num">6<small>+</small></div><div class="lbl">奖项与认证（iCAN / ICT / HCIA / 软著）</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PROJECTS ======================= -->
+<section class="sec" id="projects">
+  <div class="container">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 项目 <span class="idx">projects/</span></h2>
+    <p class="sec-desc reveal">3个独立开发项目 · 4个实验室项目 · 1个实习项目</p>
+    <div class="sec-line reveal"></div>
+
+    <!-- ===== 核心项目 ===== -->
+    <h3 class="sub-title">核心项目 · core <span class="idx">成熟开发架构</span></h3>
+    <a class="card featured reveal" href="projects/wrist-talk.html" style="margin-bottom:8px">
+      <div class="card-top">
+        <div class="code">~/projects/<b>wrist-talk</b></div>
+        <span class="badge">FEATURED</span>
+      </div>
+      <h3>Wrist-Talk 智能腕表固件 · STM32 + FreeRTOS + LVGL</h3>
+      <div class="tags">
+        <span class="tag grn">STM32F411</span><span class="tag grn">FreeRTOS</span><span class="tag grn">LVGL</span>
+        <span class="tag">Active Object</span><span class="tag">五层架构</span><span class="tag">OOP-in-C</span>
+        <span class="tag">低功耗</span><span class="tag alt">IAP OTA 双保险</span>
+      </div>
+      <p class="overview">
+        企业级固件工程：五层单向依赖架构 + Active Object 无锁并发框架 + OOP-in-C 驱动体系 + 七级自动初始化 +
+        声明式低功耗引擎 + 单槽双保险 IAP OTA（Ymodem + CRC32）。把 Linux 内核 /
+        AUTOSAR 的工程思想完整落进一颗 512KB Flash 的 MCU。
+      </p>
+      <div class="metric">▲ 核心项目 · 成熟架构</div>
+      <span class="go">进入项目 <span class="arr">→</span></span>
+    </a>
+
+    <!-- ===== 独立开发项目 ===== -->
+    <h3 class="sub-title">独立开发项目 · personal <span class="idx">独立完成，从 0 到 1</span></h3>
+    <div class="grid cols-2">
+      <a class="card reveal" href="projects/teo-estuary.html">
+        <div class="card-top">
+          <div class="code">~/projects/<b>teo-estuary</b></div>
+          <span class="badge os">OPEN SOURCE</span>
+        </div>
+        <h3>Teo-Estuary 潮汕话语料平台</h3>
+        <div class="tags">
+          <span class="tag grn">开源</span><span class="tag">ASR</span><span class="tag">数据管线</span>
+          <span class="tag">Web 平台</span><span class="tag">FunASR</span>
+        </div>
+        <p class="overview">开源的潮汕话语音数据收集 / 标注平台：双通道采集 → VAD/滤波/筛选管线 → 自训 Paraformer ASR → 人工审核标注 → 潮语词典沉淀，数据集生产效率提升 3 倍。</p>
+        <div class="metric">GitHub 开源</div>
+        <span class="go">进入项目 <span class="arr">→</span></span>
+      </a>
+
+      <a class="card reveal" href="projects/cane-terminal.html">
+        <div class="card-top">
+          <div class="code">~/projects/<b>cane-terminal</b></div>
+          <span class="badge personal">PERSONAL</span>
+        </div>
+        <h3>Cane 适老化 AI 辅助终端</h3>
+        <div class="tags">
+          <span class="tag grn">ESP32</span><span class="tag">BLE</span><span class="tag">OpenClaw</span>
+          <span class="tag">硬件原型</span><span class="tag alt">产品设计</span>
+        </div>
+        <p class="overview">面向老年人的「语音主交互 + 按键辅助」AI 终端：终端 BLE 调起手机 Agent 操控 App，融合自训方言 ASR。已完成 ESP32 原型打通链路，正规划以 STM32 技术栈重启。</p>
+        <div class="metric">ESP32 原型已跑通</div>
+        <span class="go">进入项目 <span class="arr">→</span></span>
+      </a>
+    </div>
+
+    <!-- ===== 工业视觉 ===== -->
+    <h3 class="sub-title">工业视觉与运动控制 · industrial <span class="idx">实验室项目 · 负责人 / 核心开发</span></h3>
+    <div class="grid cols-2">
+      <a class="card reveal" href="projects/pack-line.html">
+        <div class="card-top">
+          <div class="code">~/projects/<b>pack-line</b></div>
+          <span class="badge lead">PROJECT LEAD</span>
+        </div>
+        <h3>锂电池自动化 PACK 生产线</h3>
+        <div class="tags">
+          <span class="tag grn">项目负责人</span><span class="tag">OpenCV</span><span class="tag">PLC</span>
+          <span class="tag">Fusion 360</span><span class="tag alt">iCAN 全国三等奖</span>
+        </div>
+        <p class="overview">全流程自动化产线（分选 / 绝缘 / 组装 / 焊接 / 码垛）。焊接模块：视觉识别 56% → 98.5%、随动焊接预研、Unity 数字孪生与焊后良率检测；产线整合：移料机构重构、PLC 控制架构与 BOM 输出。</p>
+        <div class="metric">工业生产落地</div>
+        <span class="go">进入项目 <span class="arr">→</span></span>
+      </a>
+
+      <a class="card reveal" href="projects/wafer-inspection.html">
+        <div class="card-top">
+          <div class="code">~/projects/<b>wafer-inspection</b></div>
+          <span class="badge vision">VISION</span>
+        </div>
+        <h3>晶圆检测最小可行性设备</h3>
+        <div class="tags">
+          <span class="tag">工业视觉</span><span class="tag">OpenCV</span><span class="tag">傅里叶矫正</span>
+          <span class="tag">模板匹配</span>
+        </div>
+        <p class="overview">低成本晶圆明场检测 MVP：复现浙大论文算法，图像裁切 → 频域滤波 → 霍夫线矫正（正态分布拟合优化）→ 同态滤波 → 金模板差分缺陷提取，打通晶圆检测工作流。</p>
+        <div class="metric">算法复现 + 优化</div>
+        <span class="go">进入项目 <span class="arr">→</span></span>
+      </a>
+    </div>
+
+    <!-- ===== 其他项目 ===== -->
+    <h3 class="sub-title">其他项目 · others <span class="idx">参与为主 · 简略介绍</span></h3>
+    <details class="others reveal">
+      <summary><span class="arrow">▸</span> 展开查看其余参与过的项目</summary>
+      <div class="others-body">
+        <div class="other-row">
+          <a class="name" href="projects/machine-tool.html">machine-tool-twin</a>
+          <p class="desc">参与五轴机床数字孪生监测：主轴功率 / 温度 / 编码器数据采集，MQTT → 华为云 IoTDA → Flask 后端 / React 前端，APS 数字孪生热图告警，微调大模型提供故障维修问答。</p>
+          <a class="go" href="projects/machine-tool.html">查看 →</a>
+        </div>
+        <div class="other-row">
+          <a class="name" href="projects/ai-health-agent.html">ai-health-agent</a>
+          <p class="desc">延康科技实习：Dify 搭建健康咨询智能体（3 Sub-Agent 集成 + RAG 个性化健康档案），接入微信小程序与公司 APP；本地大模型部署（VLLM / Ktransformers）。</p>
+          <a class="go" href="projects/ai-health-agent.html">查看 →</a>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ======================= EXPERIENCE ======================= -->
+<section class="sec" id="experience">
+  <div class="container">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 经历 <span class="idx">experience/</span></h2>
+    <div class="sec-line reveal"></div>
+    <!-- 时间线年份请按实际情况微调 -->
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="when">2026.05 – 至今</div>
+        <div class="role">独立开发项目 · 固件开发</div>
+        <h4>Wrist-Talk 智能腕表系统</h4>
+        <p>STM32F411 + FreeRTOS + LVGL：五层单向依赖架构、Active Object 无锁并发、OOP-in-C 驱动体系、七级自动初始化、声明式低功耗引擎、单槽双保险 IAP OTA。</p>
+      </div>
+      <div class="tl-item">
+        <div class="when">2025.10 – 至今</div>
+        <div class="role">开源项目作者 · 个人创客</div>
+        <h4>Teo-Estuary 语料平台 & Cane 适老化终端</h4>
+        <p>双通道语料收集 + 自动化处理管线（VAD/滤波/筛选/初版 ASR）+ 人工标注平台，数据集生产效率提升 3 倍；基于 FunASR 微调潮汕话 ASR。Cane 终端完成 ESP32 BLE 原型，规划以 STM32 技术栈重启。</p>
+      </div>
+      <div class="tl-item">
+        <div class="when">2025.01 – 2025.09</div>
+        <div class="role">AI 应用开发实习生 · 技术部</div>
+        <h4>广东延康科技有限公司</h4>
+        <p>基于 Dify 搭建健康咨询智能体（3 Sub-Agent 集成 Main Agent）：对话中自动结构化总结健康信息、元数据绑定、RAG 长期记忆与精准召回；负责本地大模型部署（VLLM / Ktransformers）并接入端侧智能体；接入微信小程序与公司 APP。</p>
+      </div>
+      <div class="tl-item">
+        <div class="when">2024.01 – 2025.01</div>
+        <div class="role">项目负责人 · 工业视觉 / PLC 控制 / 机械设计</div>
+        <h4>锂电池自动化PACK生产线· 校内实验室</h4>
+        <p>焊接模块：视觉识别成功率 56% → 98.5%，完成「随动焊接」预研，Unity 数字孪生与 ModelArts 焊后良率检测，获 iCAN 全国三等奖；产线整合：Fusion 360 移料机构重构（非标件转标准件）、PLC 控制架构与工业组网、贴纸模块结构设计，输出 BOM 表并落地实物。</p>
+      </div>
+      <div class="tl-item">
+        <div class="when">2024.05 – 2025.02</div>
+        <div class="role">工业视觉开发</div>
+        <h4>晶圆检测最小可行性设备（校内实验室）</h4>
+        <p>复现并优化晶圆明场缺陷检测算法：图像矫正（傅里叶变换 + 霍夫线 + 正态分布角度拟合）、同态滤波、金模板差分缺陷提取；参与视觉硬件选型。</p>
+      </div>
+      <div class="tl-item">
+        <div class="when">2024.02 – 2024.12</div>
+        <div class="role">参与 · 传感与后端开发</div>
+        <h4>五轴机床数字孪生监测（校内实验室）</h4>
+        <p>搭建机床传感器采集 → MQTT → 华为云 IoTDA → Flask → React 数字孪生全链路；APS 热图告警与机床运动同步；微调大模型提供故障维修问答。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= AWARDS ======================= -->
+<section class="sec" id="awards">
+  <div class="container">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 奖项与认证 <span class="idx">awards/</span></h2>
+    <p class="sec-desc reveal">比赛获奖与专业认证，点击可放大查看。</p>
+    <div class="sec-line reveal"></div>
+    <div class="award-grid">
+      <figure class="shot award reveal" data-caption="第十八届 iCAN 大学生创新创业大赛 · 全国三等奖（2024.12）">
+        <img src="assets/img/award-ican.jpg" alt="iCAN 全国三等奖" loading="lazy">
+        <figcaption>iCAN 创新创业大赛 · 全国三等奖 · 2024.12</figcaption>
+      </figure>
+      <figure class="shot award reveal" data-caption="CIMC 中国智能制造挑战赛 · 全国初赛二等奖（2024）">
+        <img src="assets/img/award-cimc.jpg" alt="CIMC 中国智能制造挑战赛" loading="lazy">
+        <figcaption>CIMC 中国智能制造挑战赛 · 全国初赛二等奖 · 2024</figcaption>
+      </figure>
+      <figure class="shot award reveal" data-caption="第九届华为 ICT 大赛创新赛 · 省级二等奖（2025.04）">
+        <img src="assets/img/cert-ict.jpg" alt="华为 ICT 大赛创新赛省级二等奖" loading="lazy">
+        <figcaption>华为 ICT 大赛创新赛 · 省级二等奖 · 2025.04</figcaption>
+      </figure>
+      <figure class="shot award reveal" data-caption="软件著作权《多模型融合健康决策引擎管理系统》（2025.08 登记）">
+        <img src="assets/img/cert-softcopyright.jpg" alt="软件著作权证书" loading="lazy">
+        <figcaption>软著《多模型融合健康决策引擎管理系统》 · 2025.08</figcaption>
+      </figure>
+      <figure class="shot award reveal" data-caption="华为 HCIA 人工智能认证（2024.09）">
+        <img src="assets/img/cert-hcia.jpg" alt="华为 HCIA 人工智能认证" loading="lazy">
+        <figcaption>华为 HCIA 人工智能认证 · 2024.09</figcaption>
+      </figure>
+      <a class="award-pdf reveal" href="assets/certs/cert-smart-manufacturing.pdf" target="_blank" rel="noopener">
+        <div class="pdf-badge">PDF</div>
+        <div class="award-name">中国大学生机械工程创新创意大赛智能制造赛 · 全国三等奖</div>
+        <div class="award-date">2024.11</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SKILLS ======================= -->
+<section class="sec" id="skills">
+  <div class="container">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 技术栈 <span class="idx">skills/</span></h2>
+    <p class="sec-desc reveal">按嵌入式开发的能力维度组织，每一项都来自上面项目的实际使用。</p>
+    <div class="sec-line reveal"></div>
+    <div class="skill-groups reveal">
+      <div class="skill-group">
+        <h4>嵌入式固件</h4>
+        <div class="skill-chips">
+          <span class="skill-chip">C</span><span class="skill-chip">STM32 (HAL)</span><span class="skill-chip">FreeRTOS</span>
+          <span class="skill-chip">CMSIS-RTOS2</span><span class="skill-chip">LVGL</span><span class="skill-chip">Keil MDK / ARMCC</span>
+          <span class="skill-chip">CubeMX</span><span class="skill-chip">OOP-in-C</span><span class="skill-chip">Active Object</span>
+          <span class="skill-chip">IAP OTA (Ymodem)</span><span class="skill-chip">低功耗 STOP/STANDBY</span>
+          <span class="skill-chip">UART DMA+IDLE</span><span class="skill-chip">SPI DMA</span><span class="skill-chip">软件 I2C</span>
+          <span class="skill-chip">BLE 透传 (KT6328)</span><span class="skill-chip">ESP32</span><span class="skill-chip">看门狗</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>工业视觉 & 运动控制</h4>
+        <div class="skill-chips">
+          <span class="skill-chip">OpenCV</span><span class="skill-chip">傅里叶变换</span><span class="skill-chip">同态滤波</span>
+          <span class="skill-chip">霍夫变换</span><span class="skill-chip">模板匹配</span><span class="skill-chip">缺陷检测</span>
+          <span class="skill-chip">轨迹规划 / 焊点排序</span><span class="skill-chip">PLC</span><span class="skill-chip">步进电机</span>
+          <span class="skill-chip">数字孪生 (Unity / APS)</span><span class="skill-chip">ModelArts</span><span class="skill-chip">Fusion 360 建模</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>软件 & AI 应用</h4>
+        <div class="skill-chips">
+          <span class="skill-chip">Python</span><span class="skill-chip">C++</span><span class="skill-chip">React</span>
+          <span class="skill-chip">Flask</span><span class="skill-chip">MQTT</span><span class="skill-chip">华为云 IoTDA</span>
+          <span class="skill-chip">Git</span><span class="skill-chip">Dify</span><span class="skill-chip">RAG</span>
+          <span class="skill-chip">大模型微调</span><span class="skill-chip">FunASR / ASR</span><span class="skill-chip">数据管线</span><span class="skill-chip">VLLM / Ktransformers</span><span class="skill-chip">ModelScope / HF</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>工程方法</h4>
+        <div class="skill-chips">
+          <span class="skill-chip">分层架构 (AUTOSAR 思想)</span><span class="skill-chip">依赖注入</span>
+          <span class="skill-chip">面向切面 (AOP)</span><span class="skill-chip">声明式配置</span>
+          <span class="skill-chip">表驱动</span><span class="skill-chip">接口归调用者所有</span>
+          <span class="skill-chip">文档驱动</span><span class="skill-chip">Harness 辅助开发 (Claude Code / Codex)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CONTACT ======================= -->
+<section class="sec" id="contact">
+  <div class="container">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 联系 <span class="idx">contact/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>
+        欢迎通过以下渠道联系与交流，更多细节可邮件索取。
+      </p>
+    </div>
+    <div class="stat-strip reveal">
+      <a class="stat" style="text-decoration:none; display:block" href="https://github.com/OrlandoHsu29" target="_blank" rel="noopener">
+        <div class="num" style="font-size:1.05rem; color:var(--accent-2)">github.com/OrlandoHsu29</div>
+        <div class="lbl">GitHub · 开源与项目代码</div>
+      </a>
+      <a class="stat" style="text-decoration:none; display:block" href="mailto:orlandohsu29@163.com">
+        <div class="num" style="font-size:1.05rem; color:var(--accent-2)">orlandohsu29@163.com</div>
+        <div class="lbl">Email · 163邮箱</div>
+      </a>
+      <a class="stat" style="text-decoration:none; display:block" href="assets/resume/resume.pdf" download>
+        <div class="num" style="font-size:1.05rem; color:var(--accent-2)">resume.pdf ↓</div>
+        <div class="lbl">简历下载 · resume.pdf</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="term">
+      <div class="term-body">
+        <div class="line"><span class="ok">$</span> ./deploy.sh --target github-pages <span class="info">→</span> done</div>
+        <div class="line dim">编译环境：plain HTML/CSS/JS · 无构建步骤 · 零外部依赖</div>
+        <div class="line dim">© <span id="year">2026</span> Orlando Hsu · Built with <span class="ok">▮</span></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="copy">~/hsu — Embedded Software Engineer</div>
+      <div class="copy"><a href="#top">back to top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js?v=4"></script>
+</body>
+</html>

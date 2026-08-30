@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>晶圆检测 MVP · 许博耀</title>
+<meta name="description" content="晶圆检测 MVP：低成本明场检测设备 —— 复现并优化浙大论文算法，傅里叶矫正、模板匹配、缺陷提取">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../assets/css/main.css?v=4">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<a class="back-btn" href="../index.html#projects" title="返回项目列表" aria-label="返回项目列表">←</a>
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="../index.html"><span class="tilde">~</span>/hsu<span class="cursor">_</span></a>
+    <div class="nav-proj"><a href="../index.html#projects">~/projects</a>/<span class="accent">wafer-inspection</span></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换浅色/深色模式" title="切换主题">
+  <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">~</a>/projects/<span class="here">wafer-inspection</span></div>
+    <h1>晶圆检测最小可行性设备 <span class="thin">工业视觉</span></h1>
+    <p class="lead">
+      校内实验室项目：用低成本方案设计晶圆检测（明场检测）的最小可行产品（MVP），打通
+      「晶圆搬运 → 高精度运动定位 → 摄像头下逐芯片明场检测」工作流。我负责<b>视觉硬件选型与
+      全链路缺陷检测算法的开发复现</b>——参考浙江大学论文，基于 OpenCV 独立完成从图像预处理、
+      频域矫正到缺陷提取的完整算法实现，并推动项目从算法验证落地到实际检测环节。
+    </p>
+    <div class="tags">
+      <span class="tag grn">工业视觉</span><span class="tag grn">OpenCV</span><span class="tag">傅里叶变换</span>
+      <span class="tag">霍夫变换</span><span class="tag">模板匹配</span><span class="tag">缺陷检测</span>
+    </div>
+    <div class="meta-row">
+      <span>时间 <b>2024.05 – 2025.02</b></span>
+      <span>角色 <b>全链路算法开发复现 · 视觉硬件选型</b></span>
+      <span>参考 <b>浙大论文《基于明暗场成像的多扫描方式图案化晶圆检测技术研究》</b></span>
+      <span>技术 <b>Python OpenCV</b></span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 项目背景 <span class="idx">background/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>这套系统与锂电池焊接项目结构相似，但<b>对运动控制和工业视觉的要求更高</b>：设备需要具备晶圆搬运能力，
+        以及足够的移动精度，才能在摄像头下对芯片逐个进行明场检测。我的工作集中在视觉识别侧：</p>
+      <ul>
+        <li><b>缺陷检测核心算法开发复现</b>：深入研究论文《基于明暗场成像的多扫描方式图案化晶圆检测技术研究》，基于 OpenCV 独立完成从图像预处理、频域矫正到缺陷提取的全链路算法开发复现，成功验证该技术路线在实际工业场景下的可行性；</li>
+        <li><b>设备选型与落地</b>：主导视觉硬件选型，确保成像质量满足算法对明暗场特征提取的要求，推动项目从算法验证到实际检测环节的落地。</li>
+      </ul>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot wide"><img src="../assets/img/wafer-paper-flow.jpg" alt="论文参考的视觉识别流程" loading="lazy"><figcaption>论文参考 · 视觉识别流程</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 缺陷检测算法全链路 <span class="idx">algorithm/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>基于 OpenCV 独立完成「<b>图像预处理 → 频域矫正 → 重复子结构切割 → 标准图金模版求解 → 缺陷提取</b>」的完整算法开发复现。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> ① 图像矫正 <span class="idx">rectify/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>针对晶圆图像的<b>几何畸变</b>问题，采用<b>傅立叶变换频谱图</b>并结合<b>霍夫变换</b>实现图像自动矫正，
+        显著提升后续配准的精度。流程：图像裁切 → 空域转频域 → 设定频率阈值 → 霍夫变换识别线 → 计算矫正角度。</p>
+      <h3>对论文算法的优化</h3>
+      <ul>
+        <li>论文：检测出线后分类为竖直线与水平线，分别计算角度取平均，再对两个平均值取平均；</li>
+        <li>当前：对竖直线统一处理为水平线（±90°），计算所有线的角度后<b>拟合为正态分布</b>，取分布中心的 6 个角度取平均作为矫正角度——<b>避免偏差大的角度影响最终结果</b>。</li>
+      </ul>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/wafer-fft.jpg" alt="频域图" loading="lazy"><figcaption>傅里叶变换 · 频域图</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/wafer-fft-filtered.jpg" alt="频域图滤波处理" loading="lazy"><figcaption>频域图滤波处理</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/wafer-hough-lines.jpg" alt="霍夫变换线识别" loading="lazy"><figcaption>霍夫变换线识别</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/wafer-correct-orig.jpg" alt="矫正前原图" loading="lazy"><figcaption>矫正前 · 原图</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/wafer-correct-result.jpg" alt="矫正后结果" loading="lazy"><figcaption>矫正后</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> ② 重复子结构切割 <span class="idx">cut/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>利用<b>模板匹配</b>精准定位晶圆上的重复子结构，并切割晶圆单元图像，
+        提高检测的<b>标准化程度</b>，为后续逐单元比对做准备。</p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/wafer-match-out1.jpg" alt="模板匹配程序结果输出1" loading="lazy"><figcaption>模板匹配 · 程序结果输出 1</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/wafer-match-out2.jpg" alt="模板匹配程序结果输出2" loading="lazy"><figcaption>模板匹配 · 程序结果输出 2</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> ③ 图像预处理与标准图金模版求解 <span class="idx">gold-template/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>通过<b>同态滤波</b>有效消除光照不均和系统噪声的干扰；并通过<b>双阈值迭代法</b>求解标准图，
+        作为后续缺陷提取时的<b>金模版</b>。</p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/wafer-homomorphic.jpg" alt="同态滤波处理" loading="lazy"><figcaption>预处理 · 同态滤波处理</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/wafer-gold-template.jpg" alt="金模板" loading="lazy"><figcaption>标准图金模版（双阈值迭代法求解）</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> ④ 模版差分缺陷提取 <span class="idx">defect/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>将切割后的子结构与金模版进行<b>灰度差分</b>，成功提取微细缺陷图像，
+        在实测中取得了良好的检测效果。</p>
+    </div>
+    <div class="fig-grid reveal">
+      <figure class="shot"><img src="../assets/img/wafer-defect-diff.jpg" alt="样例与金模板差分" loading="lazy"><figcaption>缺陷提取 · 子结构与金模版灰度差分</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/wafer-defect-only.jpg" alt="仅保留缺陷图片" loading="lazy"><figcaption>缺陷提取 · 仅保留缺陷图片</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 设备选型与落地 <span class="idx">deploy/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>主导<b>视觉硬件选型</b>，确保成像质量满足算法对明暗场特征提取的要求，
+        推动项目从算法验证走向实际检测环节的落地。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 算法效果演示 <span class="idx">demo/</span></h2>
+    <div class="sec-line reveal"></div>
+    <div class="prose reveal">
+      <p>完整算法流程与中间结果整理成了一份思维导图演示文档，可<a href="../assets/img/wafer-algo-demo.html" target="_blank" rel="noopener">在新窗口打开查看</a>。</p>
+      <div style="margin-top:16px"><a class="btn" href="../assets/img/wafer-algo-demo.html" target="_blank" rel="noopener">打开算法效果演示 <span class="arr">→</span></a></div>
+    </div>
+  </div>
+</section>
+
+<div class="pager reveal">
+  <a href="teo-estuary.html"><div class="dir">← prev</div><div class="name">~/projects/teo-estuary</div></a>
+  <a class="next" href="pack-line.html"><div class="dir">next →</div><div class="name">~/projects/pack-line</div></a>
+</div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="term">
+      <div class="term-body">
+        <div class="line"><span class="ok">$</span> ./build.sh --target=wafer-inspection <span class="info">→</span> done</div>
+        <div class="line dim">© <span id="year">2026</span> Orlando Hsu · Embedded Software Engineer</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="copy">~/hsu — OpenCV 工业视觉 / 缺陷检测</div>
+      <div class="copy"><a href="#top">back to top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js?v=4"></script>
+</body>
+</html>
