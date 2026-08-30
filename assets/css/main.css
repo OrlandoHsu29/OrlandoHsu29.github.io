@@ -646,6 +646,7 @@ details.others .others-body{ padding:4px 18px 18px; display:flex; flex-direction
   .nav .links a:last-child{ border-bottom:none; }
   .nav .links a.active{ background:rgba(62,230,164,.06); border-left:3px solid var(--accent); }
   .nav-burger{ display:block; }
+  .theme-toggle{ margin-left:auto; }
   .nav-proj{ font-size:.72rem; max-width:58%; }
   .hero{ padding:26px 0 30px; }
   .hero .intro-line{ font-size:.72rem; margin-bottom:12px; }
@@ -675,6 +676,7 @@ details.others .others-body{ padding:4px 18px 18px; display:flex; flex-direction
   .card h3{ font-size:1.02rem; }
   .card .overview{ font-size:.85rem; }
   .grid{ gap:14px; }
+  .grid.cols-2, .grid.cols-3{ grid-template-columns:1fr; }
   .fig-grid{ grid-template-columns:1fr; gap:12px; margin:16px 0; }
   .award-grid{ grid-template-columns:repeat(2, 1fr); gap:10px; }
   .award-pdf{ min-height:120px; padding:14px 12px; }
