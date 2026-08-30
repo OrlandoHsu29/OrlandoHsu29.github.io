@@ -169,33 +169,50 @@
     modUpdate();
   }
 
-  /* ---------- 主题切换：跟随系统（prefers-color-scheme）+ 手动覆盖 ---------- */
+  /* ---------- 主题切换：默认跟随系统 + 手动覆盖（限时缓存 6 小时） ---------- */
   var themeBtn = document.getElementById("theme-toggle");
   if (themeBtn) {
-    var THEME_KEY = "portfolio-theme";
+    var MANUAL_KEY = "portfolio-theme-manual";
+    var MANUAL_TTL = 6 * 3600 * 1000;          /* 手动选择 6 小时后失效，回到跟随系统 */
     var moonIco = themeBtn.querySelector(".ico-moon");
     var sunIco = themeBtn.querySelector(".ico-sun");
-    function applyTheme(t, persist) {
+    function applyTheme(t) {
       document.documentElement.setAttribute("data-theme", t);
       if (moonIco) moonIco.style.display = t === "light" ? "none" : "inline-block";
       if (sunIco) sunIco.style.display = t === "light" ? "inline-block" : "none";
-      if (persist !== false) { try { localStorage.setItem(THEME_KEY, t); } catch (e) {} }
     }
-    /* 手动选择：点击立即切换并保存（保存后不再跟随系统，直到清除） */
+    /* 读取未过期的手动选择；没有/过期 → 返回 null（跟随系统） */
+    function getManual() {
+      try {
+        var raw = localStorage.getItem(MANUAL_KEY);
+        if (!raw) return null;
+        var obj = JSON.parse(raw);
+        if (Date.now() - obj.ts > MANUAL_TTL) {
+          localStorage.removeItem(MANUAL_KEY);
+          return null;
+        }
+        return obj.t;
+      } catch (e) { return null; }
+    }
+    function setManual(t) {
+      try { localStorage.setItem(MANUAL_KEY, JSON.stringify({ t: t, ts: Date.now() })); } catch (e) {}
+    }
+    /* 手动点击：立即切换并缓存（6 小时内保持） */
     themeBtn.addEventListener("click", function () {
       var cur = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+      setManual(cur);
       applyTheme(cur);
     });
-    /* 跟随系统：未手动选择时，随系统浅色/深色自动切换 */
+    /* 跟随系统：无手动选择（或已过期）时，随系统浅色/深色自动切换 */
     var sysLight = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
-    var manual = null;
-    try { manual = localStorage.getItem(THEME_KEY); } catch (e) {}
     function sysTheme() { return sysLight && sysLight.matches ? "light" : "dark"; }
-    applyTheme(manual || sysTheme(), true);
+    applyTheme(getManual() || sysTheme());
     if (sysLight && sysLight.addEventListener) {
       sysLight.addEventListener("change", function () {
-        if (!manual) applyTheme(sysTheme(), true);
+        if (!getManual()) applyTheme(sysTheme());
       });
     }
+    /* 清理旧版缓存键（此前误存的手动值） */
+    try { localStorage.removeItem("portfolio-theme"); } catch (e) {}
   }
 })();
