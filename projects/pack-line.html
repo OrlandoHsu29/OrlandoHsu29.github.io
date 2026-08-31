@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>锂电池自动化PACK生产线（含自研柔性焊接系统） · 许博耀</title>
-<meta name="description" content="锂电池自动化PACK生产线：项目负责人 —— 焊接模块、贴纸模块结构设计、产线整合（BOM 与 PLC 控制）">
+<meta name="description" content="锂电池自动化PACK生产线：项目负责人 —— 焊接模块、绝缘模块结构设计、产线整合（BOM 与 PLC 控制）">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../assets/css/main.css?v=7">
 </head>
@@ -30,9 +30,9 @@
     <div class="breadcrumb"><a href="../index.html">~</a>/projects/<span class="here">pack-line</span></div>
     <h1>锂电池自动化PACK生产线 <span class="thin">含自研柔性焊接系统</span></h1>
     <p class="lead">
-      面向圆柱形锂电池包定制化生产需求，构建包含<b>分选、绝缘（贴纸）、组装、焊接、码垛</b>的全流程自动化系统。
+      面向圆柱形锂电池包定制化生产需求，构建包含<b>分选、绝缘、组装、焊接、码垛</b>的全流程自动化系统。
       担任<b>项目负责人</b>，工作覆盖三条线：<b>焊接模块开发</b>（工业视觉 + 运动控制）、
-      <b>贴纸模块结构设计</b>（机械设计）与<b>产线整合</b>（BOM 整理 + PLC 控制）。
+      <b>绝缘模块结构设计</b>（机械设计）与<b>产线整合</b>（BOM 整理 + PLC 控制）。
     </p>
     <div class="tags">
       <span class="tag grn">项目负责人</span><span class="tag grn">OpenCV</span><span class="tag grn">PLC</span>
@@ -76,7 +76,7 @@
   <!-- ==================== 模块导航（第二行，滚动吸顶） ==================== -->
   <nav class="mod-scroll reveal" id="mod-scroll" aria-label="模块导航">
     <a href="#mod-1" class="active"><span class="mno">1.</span>焊接模块开发</a>
-    <a href="#mod-2"><span class="mno">2.</span>贴纸模块结构设计</a>
+    <a href="#mod-2"><span class="mno">2.</span>绝缘模块结构设计</a>
     <a href="#mod-3"><span class="mno">3.</span>产线整合 · BOM 与 PLC</a>
   </nav>
 
@@ -93,7 +93,7 @@
         <rect x="10" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
         <text x="60" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">分选</text>
         <rect x="220" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
-        <text x="270" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">绝缘·贴纸</text>
+        <text x="270" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">绝缘</text>
         <rect x="430" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
         <text x="480" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">组装</text>
         <rect x="640" y="26" width="100" height="46" rx="7" fill="rgba(62,230,164,.12)" stroke="#3ee6a4" stroke-width="1.8"/>
@@ -148,10 +148,10 @@
     </figure>
   </section>
 
-  <!-- ==================== 模块二：贴纸模块结构设计 ==================== -->
+  <!-- ==================== 模块二：绝缘模块结构设计 ==================== -->
   <section class="module" id="mod-2">
     <header class="mod-head reveal">
-      <h2>2. 贴纸模块结构设计 <span class="thin">· 机械设计</span></h2>
+      <h2>2. 绝缘模块结构设计 <span class="thin">· 机械设计</span></h2>
     </header>
     <div class="pline">
   
@@ -161,7 +161,7 @@
         <rect x="10" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
         <text x="60" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">分选</text>
         <rect x="220" y="26" width="100" height="46" rx="7" fill="rgba(62,230,164,.12)" stroke="#3ee6a4" stroke-width="1.8"/>
-        <text x="270" y="53" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3ee6a4" font-family="Consolas, monospace">绝缘·贴纸</text>
+        <text x="270" y="53" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3ee6a4" font-family="Consolas, monospace">绝缘</text>
         <rect x="430" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
         <text x="480" y="53" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">组装</text>
         <rect x="640" y="26" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
@@ -183,7 +183,7 @@
     <div class="fig-grid reveal">
       <figure class="shot"><img src="../assets/img/pack-pneumatic-transfer-1.jpg" alt="气动移料机构设计 1" loading="lazy"><figcaption>气动移料机构设计 1</figcaption></figure>
       <figure class="shot"><img src="../assets/img/pack-pneumatic-transfer-2.jpg" alt="气动移料机构设计 2" loading="lazy"><figcaption>气动移料机构设计 2</figcaption></figure>
-      <figure class="shot"><img src="../assets/img/pack-pusher-slide.jpg" alt="贴纸模块推杆滑台建模" loading="lazy"><figcaption>贴纸模块 · 推杆滑台建模</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-pusher-slide.jpg" alt="绝缘模块推杆滑台建模" loading="lazy"><figcaption>绝缘模块 · 推杆滑台建模</figcaption></figure>
     </div>
     <h3 class="sub-title">② 机架与钣金结构设计 <span class="idx">structure/</span></h3>
     <div class="prose reveal">
@@ -198,7 +198,7 @@
     </div>
     <h3 class="sub-title">实物展示 <span class="idx">result/</span></h3>
     <div class="fig-grid reveal">
-      <figure class="shot"><img src="../assets/img/pack-module-final.jpg" alt="贴纸模块最终实物" loading="lazy"><figcaption>贴纸模块最终实物</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-module-final.jpg" alt="绝缘模块最终实物" loading="lazy"><figcaption>绝缘模块最终实物</figcaption></figure>
     </div>
   </section>
 
@@ -222,7 +222,7 @@
         <rect x="10" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
         <text x="60" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">分选</text>
         <rect x="220" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
-        <text x="270" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">绝缘·贴纸</text>
+        <text x="270" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">绝缘</text>
         <rect x="430" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
         <text x="480" y="85" text-anchor="middle" font-size="12.5" fill="#91a3ba" font-family="Consolas, monospace">组装</text>
         <rect x="640" y="58" width="100" height="46" rx="7" fill="#182433" stroke="#2c3d56"/>
@@ -242,7 +242,7 @@
         输出标准化清单，支撑采购与装配。</p>
     </div>
     <div class="fig-grid reveal">
-      <figure class="shot"><img src="../assets/img/pack-bom.jpg" alt="贴纸机构 BOM 表" loading="lazy"><figcaption>BOM 表（贴纸机构示例）</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-bom.jpg" alt="绝缘机构 BOM 表" loading="lazy"><figcaption>BOM 表（绝缘机构示例）</figcaption></figure>
     </div>
     <h3 class="sub-title">PLC 控制架构与工业组网 <span class="idx">plc/</span></h3>
     <div class="prose reveal">
@@ -251,7 +251,7 @@
     </div>
     <div class="fig-grid reveal">
       <figure class="shot"><img src="../assets/img/pack-arch-overview.jpg" alt="产线整体硬件架构图" loading="lazy"><figcaption>产线整体硬件架构图</figcaption></figure>
-      <figure class="shot"><img src="../assets/img/pack-electrical-flow.jpg" alt="贴纸模块电气流程图" loading="lazy"><figcaption>贴纸模块 · 电气流程设计</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/pack-electrical-flow.jpg" alt="绝缘模块电气流程图" loading="lazy"><figcaption>绝缘模块 · 电气流程设计</figcaption></figure>
       <figure class="shot"><img src="../assets/img/pack-plc-topology.jpg" alt="虎鲸PLC网络拓扑图" loading="lazy"><figcaption>PLC 网络拓扑图</figcaption></figure>
     </div>
   </section>
