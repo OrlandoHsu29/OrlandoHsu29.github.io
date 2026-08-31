@@ -66,6 +66,81 @@
   </div>
 </section>
 
+<section class="sec" id="sec-product">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 产品定义 <span class="idx">product/</span></h2>
+    <div class="prose reveal">
+      <div class="callout">
+        <span class="t">核心判断</span>
+        Cane 不是把手机缩小成一台老人机，而是在老人和手机之间增加一个更容易理解的 AI 中间层：老人只需要说出需求，终端负责把结果整理成简单、可操作的界面。
+      </div>
+
+      <h3>名词解释</h3>
+      <p><b>现代交互</b>：指线上支付、在线导航、视频通话等数字生活交互。</p>
+
+      <h3>为什么需要一个新的交互入口</h3>
+      <p>智能手机的功能很丰富，但触控交互仍然要求用户寻找入口、点击准确位置并理解多级菜单；传统老人机虽然功能简单，却缺少支付、导航、视频通话和智能家居等现代交互能力。两者之间存在一个明显的空档：<b>功能要足够丰富，交互却必须足够简单。</b></p>
+
+      <h3>产品原则</h3>
+      <ul>
+        <li><b>语音优先：</b>通过录音键按住说话，直接描述想完成的事情，不要求用户记住 App 入口。</li>
+        <li><b>按键兜底：</b>保留方向键与确认键，用于选择 AI 整理后的结果，降低触屏定位和手势学习成本。</li>
+        <li><b>结果重绘：</b>不把手机原始界面镜像给用户，而是把复杂信息整合成一页一个重点的简化界面。</li>
+        <li><b>方言适配：</b>结合 Teo-Estuary 的潮汕话语料与 ASR 能力，覆盖只熟悉方言的老年用户。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-research">
+  <div class="container" style="padding:0">
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 需求背景与竞品分析 <span class="idx">research/</span></h2>
+    <div class="prose reveal">
+      <h3>现有产品的两端空档</h3>
+      <p><b>智能手机</b>虽然有 AI 语音交互功能，但<b>方言适配不全</b>，部分老人不会说普通话。同时智能机的<b>长辈模式主要只是在视觉上进行适老化</b>，交互尽管有一定程度的简化，但对老年人来说依旧复杂。</p>
+      <p>再简单的交互也需要学习。由于老年人的年龄、心理等原因，他们更难接受新鲜事物的学习；记忆力不佳、对新事物的恐惧以及排斥，导致其反感使用智能手机，进而导致<b>智能手机的学习困难程度大于智能手机所被需要的程度</b>。</p>
+      <p><b>老人机</b>虽然功能相对简单，但是大部分没有和 AI 进行结合，并且部分老人机交互仍旧不够简化，多级菜单选择复杂，交互依旧不够简洁，部分老人只会接听电话而不会拨打电话，严重影响和家人的沟通联系。</p>
+      <p>老人机本身就缺乏现代交互功能，无法进行线上支付、视频通话、智能家居控制、外出导航等，也不提供社交娱乐功能，与外界信息隔绝。Cane 要解决的不是“再做一台更简单的手机”，而是把<b>现代服务的能力</b>和<b>低学习成本的交互</b>重新组合起来。</p>
+
+      <h3>用户调研结论</h3>
+      <p>对于老年人的智能手机使用情况，调查结果表明，接近<b>五成的老年人一般熟练</b>、接近<b>三成的老年人完全不熟练</b>，还有部分老年人完全不会使用手机。这说明大部分老年人都不能多功能使用智能机，导致智能机的使用效率降低。</p>
+      <p>由于无法使用智能手机，老人会<b>脱离现代交互，形成社交隔离</b>，甚至影响其与家人正常沟通联系与日常生活出行，也加重老年人，特别是独居老人的孤独心理。因此，产品需要让用户用熟悉的自然语言表达需求，同时提供明确的物理按键作为确认和兜底；对于只会说方言的用户，还要从语音识别底座解决输入问题。</p>
+
+      <h3>竞品观察</h3>
+      <div class="tbl-wrap">
+        <table class="term-table cane-compare">
+          <tr><th>竞品</th><th>主要信息</th><th>关键结论</th><th>素材</th></tr>
+          <tr>
+            <td><b>魅族 22 Next AI</b><br><span class="idx">AI 智能终端</span></td>
+            <td>提出 AIOS 概念，强调 <b>AI 语音交互 + 手机应用</b>，用最直接的交互满足智能手机的核心需求。</td>
+            <td><ul><li>手机生态相比智能手机依旧不够成熟，目前软件厂商还不愿在实验平台上投入大量开发和维护。</li><li>辅助交互依旧是触屏交互，对老人来说仍有门槛。</li><li>目前依旧是概念和实验阶段，没有足够成熟的量产商业产品。</li></ul></td>
+            <td><div class="compare-images"><img src="../assets/img/cane/cane-ref-01.png" alt="魅族 22 Next AI 产品图" loading="lazy"><img src="../assets/img/cane/cane-ref-02.png" alt="魅族 AIOS 原生系统" loading="lazy"><img src="../assets/img/cane/cane-ref-03.png" alt="魅族 AI 交互界面" loading="lazy"><img src="../assets/img/cane/cane-ref-06.png" alt="魅族 AI 产品参考" loading="lazy"><img src="../assets/img/cane/cane-ref-12.png" alt="魅族 AI 终端参考" loading="lazy"><img src="../assets/img/cane/cane-ref-15.png" alt="魅族 AI 视觉参考" loading="lazy"></div></td>
+          </tr>
+          <tr>
+            <td><b>多亲 AI 手机</b></td>
+            <td>尝试将<b>按键交互</b>与<b>在线聊天、线上支付、NFC、智能家居</b>结合，覆盖大部分现代交互场景。</td>
+            <td><ul><li>一定程度上打通了老人进入数字生活方式的通道。</li><li>按键交互依旧不够简洁，部分老人仍不会使用这些现代交互方式。</li><li>内置小爱同学进行语音交互，但方言适配受限，且缺乏娱乐场景，老人依旧可能与外界信息隔绝。</li></ul></td>
+            <td><div class="compare-images"><img src="../assets/img/cane/cane-ref-05.png" alt="多亲 AI 手机参考图" loading="lazy"><img src="../assets/img/cane/cane-ref-07.png" alt="多亲 AI 手机产品形态" loading="lazy"><img src="../assets/img/cane/cane-ref-11.png" alt="多亲 AI 手机现代交互" loading="lazy"><img src="../assets/img/cane/cane-ref-16.png" alt="多亲 AI 手机功能参考" loading="lazy"></div></td>
+          </tr>
+          <tr>
+            <td><b>小度智慧屏</b></td>
+            <td>侧重使用<b>语音交互</b>，同时提供<b>视频通话、大屏娱乐</b>等现代交互功能，试图越过按键机相对复杂的交互逻辑。</td>
+            <td><ul><li>在线视频/语音通话要求下载小度 APP 才能添加设备，没有接入主流社交平台，添加联系人困难，通话功能受限。</li><li>大屏娱乐虽然接入主流视频平台，但视频评论、内容搜索等复杂需求依旧需要触屏。</li><li>方言适配依旧受限；如果用户只会说方言，围绕语音交互构建的链条几乎瘫痪。</li><li>现代交互场景没有做到全覆盖，便携出行和线上支付场景依旧缺失。</li></ul></td>
+            <td><div class="compare-images"><img src="../assets/img/cane/cane-ref-04.png" alt="小度智慧屏参考图" loading="lazy"><img src="../assets/img/cane/cane-ref-08.png" alt="小度智慧屏设备形态" loading="lazy"><img src="../assets/img/cane/cane-ref-09.png" alt="小度智慧屏内容场景" loading="lazy"><img src="../assets/img/cane/cane-ref-10.png" alt="小度智慧屏交互场景" loading="lazy"><img src="../assets/img/cane/cane-ref-13.png" alt="小度智慧屏产品参考" loading="lazy"><img src="../assets/img/cane/cane-ref-14.png" alt="小度智慧屏界面参考" loading="lazy"></div></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <span class="t">产品判断</span>
+        要从市场占据一定生态位，和现有成熟产品（手机、老人机）竞争的性价比是很低的，一定是去找准人群、明确需求，再去重新定义产品，现在的AI智能终端就是没找得到正确的切入点，以至于只是在一个玩具的阶段。
+        Cane 不是简单用语音接个AI代替操作，而是面向老人的使用需求，重构 GUI 与按键交互逻辑，针对语言习惯优化操作；同时也不是试图替代成熟的手机产品，Cane 的切入点是“更容易使用的入口”：用 AI 连接现有手机生态，用极少的按键和更简单的界面完成任务。
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <section class="sec"  id="sec-idx">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 技术链路 <span class="idx">link/</span></h2>
@@ -120,13 +195,17 @@
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 当前进展 <span class="idx">progress/</span></h2>
     <div class="prose reveal">
-      <p>已完成一个基于 <b>ESP32 的 demo</b>：通过 BLE 调起手机 MeowHub开源软件（基于OpenClaw开发的APP） 的语音转文字功能，打通「终端 → 语音转文字指令 → 蓝牙 → 手机 Agent → 自动化操作」链路。</p>
-      <div class="callout reveal"><span class="t">暂停与重构</span>这套 ESP32 + OpenClaw 的技术栈与企业嵌入式开发的主流技术栈契合度不高，且原 ESP32 硬件无法满足产品设计要求——因此暂停迭代，转向 <b>STM32 技术栈的智能腕表系统（Wrist-Talk）</b>，优先以企业常用技术栈系统验证并掌握成熟方案，后续结合硬件设计能力重启本产品。</div>
-      <h3>重启规划</h3>
+      <p>目前已完成一个简单的 <b>ESP32 demo</b>：通过 BLE 调起手机 MeowHub 开源软件（基于 OpenClaw 开发的 APP）的语音转文字功能，打通「终端 → 语音转文字指令 → 蓝牙 → 手机 Agent → 自动化操作」链路。</p>
+      <p>这个 demo 虽然很简单，但这套通讯通路本身是符合逻辑的。demo 跑通意味着最核心的<b>语音交互与方言交互功能没有问题</b>；按键交互则主要取决于产品设计，而不是功能实现层面。整体流程目前是可行的，只是还需要时间逐步实现。</p>
+      <p>前期的大量工作主要是投入在<b>方言 ASR 的训练</b>上，所以硬件层面稍慢，现在 ASR 已经训练出一版了，后续也就可以先把重心挪回到 Cane 的开发了。事实上腾讯云的ASR模型在近期也适配了潮汕话，并且效果应该是非常不错的。只不过它的潮汕话转文字用的还是不乏正字，AI 可能看不懂，而我先前做 ASR 的最终目的是为了让 AI 以及不会潮汕话的人能读懂，也就是说转译成普通话。所以，我先前的工作也算还是有一点点价值的，只不过有点像主线任务被别人做好了，支线任务反倒还有价值。（可恶，等很多年了都没人做，或者做不好，结果我一开始做了这些大厂又直接就把菜端上来了，想干嘛。。）</p>
+      <div class="callout reveal"><span class="t">暂停与重构</span>暂停开发主要是因为 ESP32 + OpenClaw 这套技术栈不太适合当前的求职市场要求，碍于现实原因，我先转向了更符合企业嵌入式开发主流的一套技术栈（STM32 + RTOS + 成熟架构），所以也就有了「<b>STM32 技术栈智能腕表系统（Wrist-Talk）</b>」这个项目。不过掌握了更成熟的企业级开发架构和技术栈后，也就可以应用到 Cane 上，也能让这个产品更接近成熟的量产级产品，而不只是个demo或者玩具。Wrist-Talk 项目目前基本完结，Cane 也正在计划用成熟的方案重构，重新启动。</div>
+
+      <h3>重新启动计划</h3>
       <ul>
-        <li>以 <b>STM32 作为 MCU</b> 重新设计硬件（企业主流技术栈）；或考虑 Linux 应用开发方案；</li>
-        <li>终端侧集成自训<b>方言 ASR</b>（与 Teo-Estuary 打通）；</li>
-        <li>屏幕信息由 AI 按老年人认知重绘，按键只保留方向键 + 确认键 + 录音键。</li>
+        <li>从<b>硬件设计</b>开始重新启动，重新评估 MCU、屏幕、按键、录音和通信等硬件方案；</li>
+        <li>以 <b>STM32 作为 MCU</b>，采用更成熟的企业级开发架构重新设计软件系统；也保留评估 Linux 应用开发方案的可能性；</li>
+        <li>终端侧集成自训<b>方言 ASR</b>，与 Teo-Estuary 的语料和模型能力打通；</li>
+        <li>重新开始软件整体架构设计，重构 AI 重绘界面与按键交互逻辑；按键只保留方向键 + 确认键 + 录音键。</li>
       </ul>
     </div>
   </div>

@@ -44,7 +44,7 @@
   }
 
   /* ---------- lightbox ---------- */
-  var shots = Array.prototype.slice.call(document.querySelectorAll("figure.shot:not(.nozoom)"));
+  var shots = Array.prototype.slice.call(document.querySelectorAll("figure.shot:not(.nozoom), .compare-images img"));
   if (shots.length) {
     var lb = document.createElement("div");
     lb.className = "lightbox";
@@ -62,8 +62,8 @@
     function show(i) {
       idx = (i + shots.length) % shots.length;
       var s = shots[idx];
-      var img = s.querySelector("img");
-      var cap = s.querySelector("figcaption");
+      var img = s.tagName === "IMG" ? s : s.querySelector("img");
+      var cap = s.tagName === "IMG" ? null : s.querySelector("figcaption");
       lbImg.src = img.getAttribute("src");
       lbImg.alt = img.getAttribute("alt") || "";
       lbCap.textContent = cap ? cap.textContent.trim() : "";

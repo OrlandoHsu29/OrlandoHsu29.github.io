@@ -412,6 +412,18 @@ figure.shot figcaption{
 figure.shot figcaption::before{ content:"▸"; color:var(--accent); font-size:.7rem; }
 figure.shot.wide{ grid-column:1 / -1; }
 figure.shot.wide img{ aspect-ratio:auto; object-fit:contain; }
+.cane-compare{ min-width:980px; }
+.cane-compare th{ white-space:nowrap; text-align:center; vertical-align:middle; }
+.cane-compare td{ vertical-align:top; }
+.cane-compare td:first-child{ width:130px; white-space:nowrap; text-align:center; vertical-align:middle; }
+.cane-compare td:nth-child(2){ width:235px; vertical-align:middle; }
+.cane-compare td:nth-child(3){ width:320px; }
+.cane-compare td:nth-child(4){ vertical-align:middle; }
+.cane-compare ul{ margin:0; padding-left:0; }
+.cane-compare li{ font-size:.82rem; margin:5px 0; padding-left:18px; }
+.compare-images{ display:grid; grid-template-columns:repeat(3,minmax(70px,1fr)); gap:7px; min-width:220px; }
+.compare-images img{ width:100%; height:92px; object-fit:contain; background:#060a10; border:1px solid var(--border); border-radius:5px; cursor:pointer; transition:border-color .2s ease, transform .2s ease; }
+.compare-images img:hover{ border-color:rgba(62,230,164,.5); transform:translateY(-1px); }
 
 /* ---------- lightbox ---------- */
 .lightbox{
@@ -684,6 +696,8 @@ details.others .others-body{ padding:4px 18px 18px; display:flex; flex-direction
   .grid{ gap:14px; }
   .grid.cols-2, .grid.cols-3{ grid-template-columns:1fr; }
   .fig-grid{ grid-template-columns:1fr; gap:12px; margin:16px 0; }
+  .cane-compare{ min-width:900px; }
+  .compare-images img{ height:78px; }
   .award-grid{ grid-template-columns:repeat(2, 1fr); gap:10px; }
   .award-pdf{ min-height:120px; padding:14px 12px; }
   .award-pdf .award-name{ font-size:.82rem; }
