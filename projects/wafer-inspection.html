@@ -33,7 +33,7 @@
       校内实验室项目：用低成本方案设计晶圆检测（明场检测）的最小可行产品（MVP），打通
       「晶圆搬运 → 高精度运动定位 → 摄像头下逐芯片明场检测」工作流。我负责<b>视觉硬件选型与
       全链路缺陷检测算法的开发复现</b>——参考浙江大学论文，基于 OpenCV 独立完成从图像预处理、
-      频域矫正到缺陷提取的完整算法实现，并推动项目从算法验证落地到实际检测环节。
+      图像矫正到缺陷提取的完整算法实现，并推动项目从算法验证落地到实际检测环节。
     </p>
     <div class="tags">
       <span class="tag grn">工业视觉</span><span class="tag grn">OpenCV</span><span class="tag">傅里叶变换</span>
@@ -49,15 +49,15 @@
 </section>
 
 <div class="container">
-<section class="sec">
+
+  <section class="sec" id="sec-1">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 项目背景 <span class="idx">background/</span></h2>
-    <div class="sec-line reveal"></div>
     <div class="prose reveal">
       <p>这套系统与锂电池焊接项目结构相似，但<b>对运动控制和工业视觉的要求更高</b>：设备需要具备晶圆搬运能力，
         以及足够的移动精度，才能在摄像头下对芯片逐个进行明场检测。我的工作集中在视觉识别侧：</p>
       <ul>
-        <li><b>缺陷检测核心算法开发复现</b>：深入研究论文《基于明暗场成像的多扫描方式图案化晶圆检测技术研究》，基于 OpenCV 独立完成从图像预处理、频域矫正到缺陷提取的全链路算法开发复现，成功验证该技术路线在实际工业场景下的可行性；</li>
+        <li><b>缺陷检测核心算法开发复现</b>：深入研究论文《基于明暗场成像的多扫描方式图案化晶圆检测技术研究》，基于 OpenCV 独立完成从图像预处理、图像矫正到缺陷提取的全链路算法开发复现，成功验证该技术路线在实际工业场景下的可行性；</li>
         <li><b>设备选型与落地</b>：主导视觉硬件选型，确保成像质量满足算法对明暗场特征提取的要求，推动项目从算法验证到实际检测环节的落地。</li>
       </ul>
     </div>
@@ -67,20 +67,21 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec" id="sec-work">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 缺陷检测算法全链路 <span class="idx">algorithm/</span></h2>
-    <div class="sec-line reveal"></div>
-    <div class="prose reveal">
-      <p>基于 OpenCV 独立完成「<b>图像预处理 → 频域矫正 → 重复子结构切割 → 标准图金模版求解 → 缺陷提取</b>」的完整算法开发复现。</p>
-    </div>
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 缺陷检测算法复现与优化 <span class="idx">core/</span></h2>
+    <div class="prose reveal"><p>本项目基于 OpenCV 独立完成晶圆缺陷检测的完整算法开发复现，核心工作包含 4 个部分：</p></div>
   </div>
 </section>
-
-<section class="sec">
+<nav class="mod-scroll reveal" id="mod-scroll" aria-label="章节导航">
+  <a href="#sec-rectify"  class="active"><span class="mno">1.</span>图像矫正</a>
+  <a href="#sec-cut"><span class="mno">2.</span>重复子结构切割</a>
+  <a href="#sec-gold"><span class="mno">3.</span>金模版求解</a>
+  <a href="#sec-defect"><span class="mno">4.</span>缺陷提取</a>
+</nav>
+<section class="sec work-sec" id="sec-rectify">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> ① 图像矫正 <span class="idx">rectify/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">1. 图像矫正</h2>
     <div class="prose reveal">
       <p>针对晶圆图像的<b>几何畸变</b>问题，采用<b>傅立叶变换频谱图</b>并结合<b>霍夫变换</b>实现图像自动矫正，
         显著提升后续配准的精度。流程：图像裁切 → 空域转频域 → 设定频率阈值 → 霍夫变换识别线 → 计算矫正角度。</p>
@@ -100,10 +101,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-cut">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> ② 重复子结构切割 <span class="idx">cut/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">2. 重复子结构切割</h2>
     <div class="prose reveal">
       <p>利用<b>模板匹配</b>精准定位晶圆上的重复子结构，并切割晶圆单元图像，
         提高检测的<b>标准化程度</b>，为后续逐单元比对做准备。</p>
@@ -115,10 +115,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-gold">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> ③ 图像预处理与标准图金模版求解 <span class="idx">gold-template/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">3. 金模版求解</h2>
     <div class="prose reveal">
       <p>通过<b>同态滤波</b>有效消除光照不均和系统噪声的干扰；并通过<b>双阈值迭代法</b>求解标准图，
         作为后续缺陷提取时的<b>金模版</b>。</p>
@@ -130,10 +129,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-defect">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> ④ 模版差分缺陷提取 <span class="idx">defect/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">4. 缺陷提取</h2>
     <div class="prose reveal">
       <p>将切割后的子结构与金模版进行<b>灰度差分</b>，成功提取微细缺陷图像，
         在实测中取得了良好的检测效果。</p>
@@ -145,24 +143,12 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec" id="sec-7">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 设备选型与落地 <span class="idx">deploy/</span></h2>
-    <div class="sec-line reveal"></div>
     <div class="prose reveal">
       <p>主导<b>视觉硬件选型</b>，确保成像质量满足算法对明暗场特征提取的要求，
         推动项目从算法验证走向实际检测环节的落地。</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec">
-  <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 算法效果演示 <span class="idx">demo/</span></h2>
-    <div class="sec-line reveal"></div>
-    <div class="prose reveal">
-      <p>完整算法流程与中间结果整理成了一份思维导图演示文档，可<a href="../assets/img/wafer-algo-demo.html" target="_blank" rel="noopener">在新窗口打开查看</a>。</p>
-      <div style="margin-top:16px"><a class="btn" href="../assets/img/wafer-algo-demo.html" target="_blank" rel="noopener">打开算法效果演示 <span class="arr">→</span></a></div>
     </div>
   </div>
 </section>

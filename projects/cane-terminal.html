@@ -48,10 +48,10 @@
 </section>
 
 <div class="container">
-<section class="sec">
+
+  <section class="sec" id="sec-1">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 项目理念 <span class="idx">idea/</span></h2>
-    <div class="sec-line reveal"></div>
     <div class="prose reveal">
       <p>老年用户最大的门槛不是「不会用某个 App」，而是<b>触控交互本身</b>：找入口、点对位置、理解层级菜单。
         市面上的 AI 手机（豆包等）和开源方案（OpenClaw 手机版）已经能做到「AI 操作手机」，本质是加一层
@@ -66,10 +66,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec"  id="sec-idx">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 技术链路 <span class="idx">link/</span></h2>
-    <div class="sec-line reveal"></div>
     <div class="prose reveal">
       <p>终端通过蓝牙调起手机上的功能：在终端识别语音指令，或发送控制指令；手机端由 OpenClaw 把指令转化为控制脚本，从而操控手机完成目标需求。</p>
     </div>
@@ -117,10 +116,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec"  id="sec-progress">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 当前进展 <span class="idx">status/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 当前进展 <span class="idx">progress/</span></h2>
     <div class="prose reveal">
       <p>已完成一个基于 <b>ESP32 的 demo</b>：通过 BLE 调起手机 MeowHub开源软件（基于OpenClaw开发的APP） 的语音转文字功能，打通「终端 → 语音转文字指令 → 蓝牙 → 手机 Agent → 自动化操作」链路。</p>
       <div class="callout reveal"><span class="t">暂停与重构</span>这套 ESP32 + OpenClaw 的技术栈与企业嵌入式开发的主流技术栈契合度不高，且原 ESP32 硬件无法满足产品设计要求——因此暂停迭代，转向 <b>STM32 技术栈的智能腕表系统（Wrist-Talk）</b>，优先以企业常用技术栈系统验证并掌握成熟方案，后续结合硬件设计能力重启本产品。</div>

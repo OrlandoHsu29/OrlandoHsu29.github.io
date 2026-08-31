@@ -201,21 +201,29 @@ h1,h2,h3,h4{ line-height:1.3; font-weight:650; letter-spacing:.2px; }
 .sec{ padding:54px 0 8px; }
 .sec-title{
   display:flex; align-items:baseline; gap:10px;
-  font-size:1.28rem; margin-bottom:8px; color:var(--text);
+  font-size:1.28rem; margin-bottom:20px; color:var(--text);
 }
 .sec-title .prompt{ font-family:var(--mono); color:var(--accent); font-size:1rem; }
 .sec-title .idx{ font-family:var(--mono); font-size:.8rem; color:var(--text-faint); }
 .sec-desc{ color:var(--text-dim); max-width:none; margin-bottom:26px; font-size:.96rem; }
-.sec-line{ height:1px; background:linear-gradient(90deg, var(--border-2), transparent); margin-bottom:30px; }
+.sec-line{ height:1px; background:linear-gradient(90deg, var(--accent), rgba(62,230,164,.28) 42%, transparent); margin-bottom:30px; }
+
+/* 首页项目区不使用主分割线，改用留白区分层级 */
+#projects > .container > .sec-desc{ margin-bottom:34px; }
+#experience > .container > .sec-title{ margin-bottom:24px; }
 
 /* 小节标题 */
 .sub-title{
   font-family:var(--mono); font-size:1.05rem; font-weight:600;
   color:var(--accent); display:flex; align-items:center; gap:12px;
-  margin:36px 0 16px; letter-spacing:.5px;
+  margin:32px 0 16px; letter-spacing:.5px;
 }
 .sub-title::before{ content:"##"; color:var(--text-faint); font-size:.78em; font-weight:400; }
-.sub-title::after{ content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--accent) 0%, rgba(62,230,164,.25) 45%, transparent 100%); }
+.sub-title::after{ content:none; }
+#projects > .container > .sub-title::after{
+  content:""; display:block; flex:1; height:1px;
+  background:linear-gradient(90deg,var(--border-2), rgba(148,163,184,.22) 45%, transparent);
+}
 .sub-title .idx{ color:var(--text-faint); font-size:.78rem; font-weight:400; }
 
 /* ---------- cards ---------- */
@@ -554,10 +562,6 @@ details.others .others-body{ padding:4px 18px 18px; display:flex; flex-direction
 .other-row .go:hover{ color:var(--accent); }
 
 /* ---------- pack-line 长页模块 ---------- */
-.mod-nav-intro{
-  font-family:var(--mono); font-size:.84rem; color:var(--text-dim);
-  margin:16px 0 0;
-}
 .module{ scroll-margin-top:calc(var(--nav-h) + 70px); }
 .module + .module{ margin-top:72px; border-top:1px solid var(--border); padding-top:50px; }
 .mod-head{ margin:0 0 26px; padding:0; background:none; border:none; border-radius:0; }
@@ -663,9 +667,11 @@ details.others .others-body{ padding:4px 18px 18px; display:flex; flex-direction
   .page-hero .lead{ font-size:.95rem; margin-top:10px; }
   .page-hero .meta-row{ font-size:.72rem; gap:8px 16px; margin-top:14px; }
   .sec{ padding:34px 0 2px; }
-  .sec-title{ font-size:1.08rem; }
+  .sec-title{ font-size:1.08rem; margin-bottom:16px; }
   .sec-title .prompt{ font-size:.85rem; }
   .sec-desc{ font-size:.88rem; margin-bottom:18px; }
+  #projects > .container > .sec-desc{ margin-bottom:24px; }
+  #experience > .container > .sec-title{ margin-bottom:18px; }
   .sub-title{ font-size:.86rem; margin:26px 0 12px; gap:10px; }
   .stat-strip{ grid-template-columns:repeat(2, 1fr); gap:10px; margin:18px 0 4px; }
   .stat{ padding:11px 13px; }
@@ -694,7 +700,7 @@ details.others .others-body{ padding:4px 18px 18px; display:flex; flex-direction
   .footer{ margin-top:50px; }
   .footer-inner{ padding:22px 0 24px; }
   .footer .term-body{ font-size:.72rem; }
-  .mod-nav-intro{ font-size:.78rem; }
+  
   .mod-scroll{ margin:10px 0 38px; padding:6px 4px; gap:6px; }
   .mod-scroll a{ flex:1 1 auto; text-align:center; font-size:.74rem; padding:6px 4px; }
   .mod-head h2{ font-size:1.35rem; }
@@ -772,3 +778,44 @@ details.others .others-body{ padding:4px 18px 18px; display:flex; flex-direction
   background:rgba(62,230,164,.28);
   color:#eafff5;
 }
+
+/* ============================================================
+   项目页章节悬浮导航（同 pack-line 设计）
+   ============================================================ */
+.sec[id]{ scroll-margin-top:calc(var(--nav-h) + 84px); }
+.mod-scroll a{ min-width:110px; }
+
+/* ============================================================
+   项目页「工作内容」子标题（# 前缀）+ 导航框等高
+   ============================================================ */
+.work-title{
+  font-family:var(--mono); font-size:1.25rem; font-weight:700; color:var(--text);
+  display:flex; align-items:center; gap:12px;
+  margin:44px 0 18px; padding-bottom:0;
+  border-bottom:0;
+  letter-spacing:.3px;
+}
+.work-title::before{ content:"#"; color:var(--accent); font-weight:600; margin-right:12px; }
+.work-title::after{ content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--border-2), rgba(148,163,184,.22) 45%, transparent); }
+@media (max-width:640px){ .work-title{ font-size:1.08rem; gap:10px; } }
+
+/* 导航选项等高：容器 stretch + 选项 flex 居中 + 最小高度 */
+.mod-scroll{ align-items:stretch; }
+.mod-scroll a{ display:flex; align-items:center; justify-content:center; min-height:36px; }
+
+/* ============================================================
+   压缩「工作内容」模块间距（.sec padding + work-title margin + nav margin 不再叠加）
+   ============================================================ */
+.work-sec{ padding-top:0; }
+.work-sec .work-title{ margin-top:34px; }
+.mod-scroll{ margin-bottom:24px; }
+@media (max-width:640px){
+  .mod-scroll{ margin-bottom:20px; }
+  .work-sec .work-title{ margin-top:28px; }
+}
+
+/* ============================================================
+   前言与悬浮导航贴合（压缩 sec-work 底部 + prose 段落 margin）
+   ============================================================ */
+#sec-work{ padding-bottom:0; }
+#sec-work .prose p{ margin-bottom:6px; }

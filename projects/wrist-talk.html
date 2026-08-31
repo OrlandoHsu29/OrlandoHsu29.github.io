@@ -56,10 +56,10 @@
 </section>
 
 <div class="container">
-<section class="sec">
+
+  <section class="sec" id="sec-1">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 项目概述 <span class="idx">overview/</span></h2>
-    <div class="sec-line reveal"></div>
     <div class="prose reveal">
       <p>
         这个项目源自 <b>Cane 适老化 AI 终端</b>的产品构想：语音主交互 + 按键辅助。但那套 ESP32 + OpenClaw 的技术栈
@@ -75,10 +75,22 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec" id="sec-work">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 五层单向依赖架构 <span class="idx">arch/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 工作内容 <span class="idx">core/</span></h2>
+    <div class="prose reveal"><p>本项目核心开发工作包含 5 个部分：五层架构 · 并发框架 · 面向对象驱动 · 低功耗 · OTA。</p></div>
+  </div>
+</section>
+<nav class="mod-scroll reveal" id="mod-scroll" aria-label="章节导航">
+  <a href="#sec-arch" class="active"><span class="mno">1.</span>五层架构</a>
+  <a href="#sec-ao"><span class="mno">2.</span>并发框架</a>
+  <a href="#sec-drv"><span class="mno">3.</span>面向对象驱动</a>
+  <a href="#sec-pwr"><span class="mno">4.</span>低功耗</a>
+  <a href="#sec-ota"><span class="mno">5.</span>OTA</a>
+</nav>
+<section class="sec work-sec" id="sec-arch">
+  <div class="container" style="padding:0">
+    <h2 class="work-title reveal">1. 五层单向依赖架构</h2>
     <div class="prose reveal">
       <p>借鉴 AUTOSAR 分层思想 + Linux 设备模型，把固件拆成五层，<b>上层只依赖下层，下层绝不 include 上层</b>；跨层事件通知一律用回调注入（DIP）。</p>
     </div>
@@ -144,10 +156,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-ao">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> Active Object 并发框架 <span class="idx">concurrency/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">2. Active Object 并发框架</h2>
     <div class="prose reveal">
       <p>参考 QP/C 与 Linux workqueue 思想：<b>每个 Active Object = 一个 FreeRTOS 任务 + 私有消息队列（深度 16）+ dispatch 分发函数</b>。事件载荷 12 字节内联传值，<code>ao_post_event</code> 可在 ISR 中安全调用——跨上下文无指针生命周期问题。</p>
     </div>
@@ -203,10 +214,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-drv">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> OOP-in-C 驱动体系与通讯协议 <span class="idx">drivers/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">3. OOP-in-C 驱动体系</h2>
 
     <h3 class="sub-title">七级自动初始化 <span class="idx">仿 Linux module_init / RT-Thread INIT_EXPORT</span></h3>
     <div class="prose reveal">
@@ -259,10 +269,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-pwr">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 低功耗设计 <span class="idx">power/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">4. 低功耗设计</h2>
     <div class="prose reveal">
       <p>按电源域从浅到深拆解三种低功耗模式，回答「谁还在供电 / 唤醒源 / 唤醒代价」三个问题：</p>
     </div>
@@ -296,10 +305,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-ota">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> OTA：单槽双保险 IAP <span class="idx">ota/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">5. OTA：单槽双保险 IAP</h2>
     <div class="prose reveal">
       <p>BootLoader 与 App 采用明确的 Flash 分区：BootLoader 占用 S0–S1，S2 保存升级标志，App 从 0x0800C000 启动。受 512KB Flash 容量限制，App 区约 464KB，无法同时容纳两份完整镜像，因此采用「单槽 + 双保险」方案，保证掉电后不跳转到半成品。</p>
     </div>
@@ -354,10 +362,9 @@ uint32_t pc = *(<span class="k">volatile</span> uint32_t *)(APP_BASE + <span cla
   </div>
 </section>
 
-<section class="sec">
+<section class="sec" id="sec-7">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 总结：本工程展示的嵌入式能力 <span class="idx">summary/</span></h2>
-    <div class="sec-line reveal"></div>
     <div class="tbl-wrap reveal">
       <table class="term-table">
         <tr><th>能力维度</th><th>本工程的落地</th></tr>

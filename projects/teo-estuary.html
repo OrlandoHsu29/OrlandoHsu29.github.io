@@ -54,10 +54,10 @@
 </section>
 
 <div class="container">
-<section class="sec">
+
+  <section class="sec" id="sec-1">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 项目介绍 <span class="idx">intro/</span></h2>
-    <div class="sec-line reveal"></div>
     <div class="prose reveal">
       <p>
         <b>Teo Estuary（潮汇）</b>是一个开源的潮汕话语料收集与标注平台。平台名称取 "Estuary"（河口 / 汇流处）之意，
@@ -71,10 +71,23 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec" id="sec-work">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 前端语料收集 · 三大模块 <span class="idx">collect/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="sec-title reveal"><span class="prompt">$</span> 工作内容 <span class="idx">core/</span></h2>
+    <div class="prose reveal"><p>本项目核心工作包含 6 个部分：语料采集 · TeoDMP 后台 · 平台工作流 · 核心特性 · 技术架构 · ASR。</p></div>
+  </div>
+</section>
+<nav class="mod-scroll reveal" id="mod-scroll" aria-label="章节导航">
+  <a href="#sec-collect" class="active"><span class="mno">1.</span>语料采集</a>
+  <a href="#sec-dmp"><span class="mno">2.</span>TeoDMP 后台</a>
+  <a href="#sec-workflow"><span class="mno">3.</span>平台工作流</a>
+  <a href="#sec-features"><span class="mno">4.</span>核心特性</a>
+  <a href="#sec-arch"><span class="mno">5.</span>技术架构</a>
+  <a href="#sec-asr"><span class="mno">6.</span>ASR</a>
+</nav>
+<section class="sec work-sec" id="sec-collect">
+  <div class="container" style="padding:0">
+    <h2 class="work-title reveal">1. 语料采集（三大模块）</h2>
     <div class="prose reveal">
       <ul>
         <li><b>Teo Recorder — 人工音频录制</b>：采集者通过浏览器实时录制潮汕话音频。拟物风格录音机界面，提供普通话参考文本，支持空格键快捷录制、实时音量监测与时长进度条，录制完成后可预览并上传。</li>
@@ -90,10 +103,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-dmp">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> TeoDMP · 数据管理后台 <span class="idx">dmp/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">2. TeoDMP 数据后台</h2>
     <div class="prose reveal">
       <p>
         管理后台提供<b>语料审核、词块编辑、数据统计、词典管理、数据导入导出</b>等完整的数据管理功能：
@@ -111,10 +123,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-workflow">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 平台工作流 <span class="idx">workflow/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">3. 平台工作流</h2>
     <div class="fig-grid reveal">
       <figure class="shot"><img src="../assets/img/teo-workflow.jpg" alt="Teo-Estuary 平台工作流" loading="lazy"><figcaption>Teo-Estuary 平台工作流</figcaption></figure>
       <figure class="shot"><img src="../assets/img/teo-dmp-workflow.jpg" alt="Teo-DMP 工作流" loading="lazy"><figcaption>Teo-DMP 数据处理工作流</figcaption></figure>
@@ -122,10 +133,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-features">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 核心特性 <span class="idx">features/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">4. 核心特性</h2>
     <div class="prose reveal">
       <h3>自维护词典（让 AI 读懂潮汕话）</h3>
       <p>完全正字或完全谐音的转写方案都存在缺陷（参考 teochew-g2p 项目对「歹看正字法」的讨论），
@@ -145,10 +155,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-arch">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> 技术架构 <span class="idx">arch/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">5. 技术架构</h2>
     <div class="fig-grid reveal">
       <figure class="shot wide"><img src="../assets/img/teo-arch.jpg" alt="技术架构图" loading="lazy"><figcaption>技术架构</figcaption></figure>
     </div>
@@ -174,10 +183,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec work-sec" id="sec-asr">
   <div class="container" style="padding:0">
-    <h2 class="sec-title reveal"><span class="prompt">$</span> ASR 与 Demo <span class="idx">asr/</span></h2>
-    <div class="sec-line reveal"></div>
+    <h2 class="work-title reveal">6. ASR 与 Demo</h2>
     <div class="prose reveal">
       <p>基于开源数据集训练出 <b>1 版潮汕话 ASR 模型</b>（FunASR 的 Paraformer），已实现基本对话场景的 demo：</p>
       <ol>
@@ -191,10 +199,9 @@
   </div>
 </section>
 
-<section class="sec">
+<section class="sec" id="sec-8">
   <div class="container" style="padding:0">
     <h2 class="sec-title reveal"><span class="prompt">$</span> 开源情况 <span class="idx">oss/</span></h2>
-    <div class="sec-line reveal"></div>
     <div class="prose reveal">
       <p>项目基于 <b>MIT License</b> 开源；音频预处理服务 <b>Teo-Emilia</b>（基于 Emilia 二开）也已开源。
         后续规划：跟读文本生成智能体开源、Teo-Recorder 音频接入 Emilia 清洗、
